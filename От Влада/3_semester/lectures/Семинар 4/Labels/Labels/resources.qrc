@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>bmstu.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>movies/giphy.gif</file>
+    </qresource>
+</RCC>

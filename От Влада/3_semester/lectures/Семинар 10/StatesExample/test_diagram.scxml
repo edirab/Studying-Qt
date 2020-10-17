@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" binding="early" xmlns:qt="http://www.qt.io/2015/02/scxml-ext" name="test_diagram" qt:editorversion="4.10.0">
+    <state id="idle">
+        <qt:editorinfo scenegeometry="228.97;-7.76;155.97;-57.76;136;100" geometry="228.97;-7.76;-73;-50;136;100"/>
+        <transition type="external" event="missionLaunched" target="execute">
+            <qt:editorinfo endTargetFactors="51.74;2.26" movePoint="65.86;9.28"/>
+        </transition>
+    </state>
+    <state id="execute">
+        <qt:editorinfo scenegeometry="166.49;418.95;-90.11;67.60;742.07;680.58" geometry="166.49;418.95;-256.60;-351.35;742.07;680.58"/>
+        <transition type="external" event="missionStopped" target="stop">
+            <qt:editorinfo endTargetFactors="49.65;8.74" movePoint="6.06;-4.14"/>
+        </transition>
+        <transition type="external" event="finished" target="idle">
+            <qt:editorinfo endTargetFactors="25.16;90.46" startTargetFactors="35.26;2.49" movePoint="-12.37;9.28"/>
+        </transition>
+        <final id="Final_1">
+            <qt:editorinfo scenegeometry="32.99;708.18;12.99;688.18;40;40" geometry="-133.50;289.23;-20;-20;40;40"/>
+        </final>
+        <state id="execute KAS">
+            <qt:editorinfo scenegeometry="480.33;215.90;420.33;165.90;202;100" geometry="313.84;-203.05;-60;-50;202;100"/>
+            <transition type="external" event="errorSolved" target="execute maneuver">
+                <qt:editorinfo endTargetFactors="48.43;89.57" movePoint="72.43;0"/>
+            </transition>
+        </state>
+        <history type="shallow" id="History_1">
+            <qt:editorinfo scenegeometry="590.12;691.68;570.12;671.68;40;40" geometry="423.63;272.73;-20;-20;40;40"/>
+        </history>
+        <state id="execute maneuver">
+            <qt:editorinfo scenegeometry="156.63;174.68;-70.11;148.44;470.74;521.24" geometry="-9.86;-244.27;-226.74;-26.24;470.74;521.24"/>
+            <transition type="external" event="missionError" target="execute KAS">
+                <qt:editorinfo endTargetFactors="21.11;31.68" movePoint="-51;0.85"/>
+            </transition>
+            <transition type="external" event="finished" target="Final_1">
+                <qt:editorinfo movePoint="52.57;6.19"/>
+            </transition>
+            <state id="diving">
+                <qt:editorinfo scenegeometry="29.83;269.71;-30.17;219.71;120;100" geometry="-126.80;95.03;-60;-50;120;100"/>
+                <transition type="external" event="-" target="ParallelManeuvers">
+                    <qt:editorinfo endTargetFactors="23.95;6.58" movePoint="56.70;4.12"/>
+                </transition>
+            </state>
+            <parallel id="ParallelManeuvers">
+                <qt:editorinfo scenegeometry="176.27;445.01;-42.89;345.20;334.16;185.81" geometry="19.64;270.33;-219.16;-99.81;334.16;185.81"/>
+                <state id="trajectory">
+                    <qt:editorinfo scenegeometry="37.11;450.47;-22.89;400.47;120;100" geometry="-139.16;5.46;-60;-50;120;100"/>
+                </state>
+                <state id="find cable">
+                    <qt:editorinfo scenegeometry="199.98;449.44;139.98;399.44;120;100" geometry="23.71;4.43;-60;-50;120;100"/>
+                </state>
+                <transition type="external" event="trajectoryDone" target="Final_2">
+                    <qt:editorinfo endTargetFactors="75.78;37.12" movePoint="-59.79;2.06"/>
+                </transition>
+            </parallel>
+            <state id="follow cable">
+                <qt:editorinfo scenegeometry="205.13;583.45;145.13;533.45;120;100" geometry="48.50;408.77;-60;-50;120;100"/>
+                <transition type="external" event="cableFound" target="Final_2">
+                    <qt:editorinfo movePoint="9.28;14.43"/>
+                </transition>
+            </state>
+            <final id="Final_2">
+                <qt:editorinfo scenegeometry="30.92;599.94;10.92;579.94;40;40" geometry="-125.71;425.26;-20;-20;40;40"/>
+            </final>
+        </state>
+    </state>
+    <state id="stop">
+        <qt:editorinfo scenegeometry="772.54;648.16;712.54;598.16;202;100" geometry="772.54;648.16;-60;-50;202;100"/>
+        <transition type="external" event="missionContinue" target="History_1">
+            <qt:editorinfo endTargetFactors="35.24;83.39" movePoint="55.67;28.87"/>
+        </transition>
+    </state>
+</scxml>
