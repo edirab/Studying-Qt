@@ -55,42 +55,12 @@ void MainWindow::drawDockingStation(QGraphicsItemGroup *group, QGraphicsScene *s
 }
 
 
-void MainWindow::drawAUV(QGraphicsItemGroup *group, QGraphicsScene *sc){
-
-    /* Приступаем к отрисовке произвольной картинки
-     * */
-    QPen penYellow(Qt::yellow);
-    QPen penRed(Qt::red);
-    QPen penBlack(Qt::black);
-
-    QBrush brushYellow(Qt::yellow);
-
-    int width = sc->width();//  100;
-    int height = sc->height();
-    qDebug() << "Размеры GraphicsView: "<< width << " " << height;
-
-    float centerx = width / 2;
-    float centery = height / 2;
-
-    int auvDiam = 30;
-    int auvLen = auvDiam * 4;
-
-//    group->addToGroup(sc->addRect(width - 3 * width / 5,
-//                                  height -  height / 4,
-//                                  auvDiam * 4, auvDiam, penBlack, brushYellow));
-
-    group->addToGroup(sc->addRect(auv_x - auvLen/2,
-                                  auv_y - auvDiam/2,
-                                  auvLen, auvDiam, penBlack, brushYellow));
-}
-
-
 void MainWindow::keyPressEvent(QKeyEvent *event) {
 
  int key=event->key(); //event->key() - целочисленный код клавиши
  qDebug() << "Нажатие: " << key;
 
-    // if (key>=Qt::Key_Right) {
+    // if (key==Qt::Key_Right) {
     //    auv_x += 10;
     // }
     // else if (key==Qt::Key_Left) {
@@ -102,20 +72,20 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     // else if (key==Qt::Key_Down) {
     //    auv_y += 10;
     // }
-     if (key == Qt::Key_D) {
-        auv_x += 10;
-     }
-     else if (key == Qt::Key_A) {
-        auv_x -= 10;
-     }
-     else if (key == Qt::Key_W) {
-        auv_y -= 10;
-     }
-     else if (key == Qt::Key_S) {
-        auv_y += 10;
-     }
+//     if (key == Qt::Key_D) {
+//        auv_x += 10;
+//     }
+//     else if (key == Qt::Key_A) {
+//        auv_x -= 10;
+//     }
+//     else if (key == Qt::Key_W) {
+//        auv_y -= 10;
+//     }
+//     else if (key == Qt::Key_S) {
+//        auv_y += 10;
+//     }
 
-   qDebug() << "auv_x: " << auv_x << "auv_y" << auv_y ;
+//   qDebug() << "auv_x: " << auv_x << "auv_y" << auv_y ;
 
    foreach( QGraphicsItem *item, scene->items(group_2->boundingRect())) {
       if(item->group() == group_2 ) {
@@ -123,7 +93,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
       }
    }
 
-   this->drawAUV(this->group_2, this->scene);
+   //this->drawAUV(this->group_2, this->scene);
 
 }
 
@@ -132,15 +102,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-
-
-
-    int width = this->ui->graphicsView->width();//  100;
-    int height = this->ui->graphicsView->height();
-
-    auv_x= width - 3 * width / 5;
-    auv_y = height -  height / 4;
 
     this->scene = new QGraphicsScene();   // Инициализируем сцену для отрисовки
     this->ui->graphicsView->setScene(scene);
@@ -164,7 +125,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->scene->setSceneRect(0,0,this->ui->graphicsView->width(), this->ui->graphicsView->height());
     this->drawDockingStation(group_1, scene);
-    this->drawAUV(group_2, scene);
+    AUV auv(scene, group_2, nullptr);
+    auv.draw();
+    //this->drawAUV(group_2, scene);
 
 }
 

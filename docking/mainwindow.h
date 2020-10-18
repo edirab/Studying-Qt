@@ -9,7 +9,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
 #include <QTimer>
-
+#include <auv.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,12 +24,12 @@ public:
     ~MainWindow();
 
     void drawDockingStation(QGraphicsItemGroup *group, QGraphicsScene *sc);
-    void drawAUV(QGraphicsItemGroup *group, QGraphicsScene *sc);
+    //void drawAUV(QGraphicsItemGroup *group, QGraphicsScene *sc);
 
 private:
     Ui::MainWindow *ui;
-    int auv_x;
-    int auv_y;
+//    int auv_x;
+//    int auv_y;
 
     QGraphicsScene      *scene;     // Объявляем сцену для отрисовки
     QGraphicsItemGroup  *group_1;   // Объявляем первую группу элементов
