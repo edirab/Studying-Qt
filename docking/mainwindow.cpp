@@ -90,19 +90,39 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
  int key=event->key(); //event->key() - целочисленный код клавиши
  qDebug() << "Нажатие: " << key;
 
- if (key>=Qt::Key_Right) {
-    auv_x += 10;
- }
- else if (key==Qt::Key_Left) {
-    auv_x -= 10;
- }
- else if (key==Qt::Key_Up) {
-    auv_y -= 10;
- }
- else if (key==Qt::Key_Down) {
-    auv_y += 10;
- }
-    qDebug() << "auv_x: " << auv_x << "auv_y" << auv_y ;
+    // if (key>=Qt::Key_Right) {
+    //    auv_x += 10;
+    // }
+    // else if (key==Qt::Key_Left) {
+    //    auv_x -= 10;
+    // }
+    // else if (key==Qt::Key_Up) {
+    //    auv_y -= 10;
+    // }
+    // else if (key==Qt::Key_Down) {
+    //    auv_y += 10;
+    // }
+     if (key == Qt::Key_D) {
+        auv_x += 10;
+     }
+     else if (key == Qt::Key_A) {
+        auv_x -= 10;
+     }
+     else if (key == Qt::Key_W) {
+        auv_y -= 10;
+     }
+     else if (key == Qt::Key_S) {
+        auv_y += 10;
+     }
+
+   qDebug() << "auv_x: " << auv_x << "auv_y" << auv_y ;
+
+   foreach( QGraphicsItem *item, scene->items(group_2->boundingRect())) {
+      if(item->group() == group_2 ) {
+         delete item;
+      }
+   }
+
    this->drawAUV(this->group_2, this->scene);
 
 }
