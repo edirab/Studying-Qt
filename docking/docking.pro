@@ -17,11 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     auv.cpp \
+    chargingstation.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     auv.h \
+    chargingstation.h \
     mainwindow.h
 
 FORMS += \

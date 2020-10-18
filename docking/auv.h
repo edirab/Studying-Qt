@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QKeyEvent>
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
@@ -35,6 +36,7 @@ public:
     AUV(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent);
 
     void draw();
+    void keyboardRedraw(QKeyEvent *event);
     void startDocking();
 
 signals:
