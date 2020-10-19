@@ -35,10 +35,14 @@ MainWindow::MainWindow(QWidget *parent)
      * */
     this->scene->setSceneRect(0,0,this->ui->graphicsView->width(), this->ui->graphicsView->height());
     Station = new chargingStation(scene, group_1, nullptr);
-    auv = new AUV(scene, group_2, nullptr);
+    auv = new AUV(scene, group_2, scene);
+    //this->ui->graphicsView->scene();
+    scene->addItem(auv);
+    //auv->setPos(auv->auv_x, auv->auv_y);
+    auv->setPos(0, 0);
 
     Station->draw();
-    auv->paint();
+    //auv->paint();
     //chargingStation Station(scene, group_1, nullptr);
 
 }

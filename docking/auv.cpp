@@ -25,32 +25,48 @@ AUV::AUV(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent):
     this->auv_y = height -  height / 4;
 }
 
+QRectF AUV::boundingRect() const {
+  return QRectF(QPoint(auv_x - auvLen/2, auv_y - auvDiam/2),
+                QPoint(auv_x + auvLen/2 + auvDiam/2, auv_y + auvDiam/2));
+}
+
 
 void AUV::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 
     /* Приступаем к отрисовке произвольной картинки
      * */
-    QPen penYellow(Qt::yellow);
-    QPen penRed(Qt::red);
-    QPen penBlack(Qt::black);
+//    QPen penYellow(Qt::yellow);
+//    QPen penRed(Qt::red);
+//    QPen penBlack(Qt::black);
 
-    QBrush brushYellow(Qt::yellow);
+//    QBrush brushYellow(Qt::yellow);
 
-    if (auvDebug){
-        int width = scene->width();//  100;
-        int height = scene->height();
-        qDebug() << "Размеры GraphicsView: "<< width << " " << height;
-    }
+//    if (auvDebug){
+//        int width = scene->width();//  100;
+//        int height = scene->height();
+//        qDebug() << "Размеры GraphicsView: "<< width << " " << height;
+//    }
 
 
-    group->addToGroup(scene->addEllipse(auv_x+auvLen/2 - auvDiam/2,
+//    group->addToGroup(scene->addEllipse(auv_x+auvLen/2 - auvDiam/2,
+//                                        auv_y-auvDiam/2,
+//                                        auvDiam, auvDiam, penBlack, brushYellow));
+
+//    group->addToGroup(scene->addRect(auv_x - auvLen/2,
+//                                  auv_y - auvDiam/2,
+//                                  auvLen, auvDiam, penBlack, brushYellow));
+    painter->setPen(Qt::black);
+    painter->setBrush(Qt::yellow);
+
+    painter->drawEllipse(auv_x+auvLen/2 - auvDiam/2,
                                         auv_y-auvDiam/2,
-                                        auvDiam, auvDiam, penBlack, brushYellow));
+                                        auvDiam, auvDiam);
 
-    group->addToGroup(scene->addRect(auv_x - auvLen/2,
-                                  auv_y - auvDiam/2,
-                                  auvLen, auvDiam, penBlack, brushYellow));
-
+    painter->drawRect(auv_x - auvLen/2,
+                      auv_y - auvDiam/2,
+                      auvLen, auvDiam);
+//    this->scene->addItem(this);
+//    this->setPos(auv_x, auv_y);
 }
 
 
@@ -106,5 +122,5 @@ void AUV::keyboardRedraw(QKeyEvent *event){
          }
       }
 
-      this->paint();
+      //this->paint();
 }
