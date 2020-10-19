@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     auv = new AUV(scene, group_2, nullptr);
 
     Station->draw();
-    auv->draw();
+    auv->paint();
     //chargingStation Station(scene, group_1, nullptr);
 
 }

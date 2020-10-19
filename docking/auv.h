@@ -2,6 +2,8 @@
 #define AUV_H
 
 #include <QObject>
+#include <QGraphicsItem>
+
 #include <QDebug>
 #include <QKeyEvent>
 #include <QGraphicsView>
@@ -9,7 +11,7 @@
 #include <QGraphicsItemGroup>
 #include <QTimer>
 
-class AUV : public QObject
+class AUV : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
@@ -35,7 +37,9 @@ public:
     explicit AUV(QObject *parent = nullptr);
     AUV(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent);
 
-    void draw();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+    QRectF boundingRect() const override;
+
     void keyboardRedraw(QKeyEvent *event);
     void startDocking();
 

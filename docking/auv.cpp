@@ -11,7 +11,8 @@ AUV::AUV(QObject *parent) : QObject(parent)
 //    this->parent();
 //}
 
-AUV::AUV(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent): QObject(parent)
+AUV::AUV(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent):
+    QObject(parent), QGraphicsItem()
 {
     this->scene = s;
     this->group = g;
@@ -25,7 +26,7 @@ AUV::AUV(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent): QObject(par
 }
 
 
-void AUV::draw(){
+void AUV::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 
     /* Приступаем к отрисовке произвольной картинки
      * */
@@ -41,9 +42,15 @@ void AUV::draw(){
         qDebug() << "Размеры GraphicsView: "<< width << " " << height;
     }
 
+
+    group->addToGroup(scene->addEllipse(auv_x+auvLen/2 - auvDiam/2,
+                                        auv_y-auvDiam/2,
+                                        auvDiam, auvDiam, penBlack, brushYellow));
+
     group->addToGroup(scene->addRect(auv_x - auvLen/2,
                                   auv_y - auvDiam/2,
                                   auvLen, auvDiam, penBlack, brushYellow));
+
 }
 
 
@@ -99,5 +106,5 @@ void AUV::keyboardRedraw(QKeyEvent *event){
          }
       }
 
-      this->draw();
+      this->paint();
 }
