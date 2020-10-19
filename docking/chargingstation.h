@@ -2,13 +2,15 @@
 #define CHARGINGSTATION_H
 
 #include <QObject>
+#include <QGraphicsItem>
+
 #include <QDebug>
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
 #include <QTimer>
 
-class chargingStation : public QObject
+class chargingStation : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
@@ -24,7 +26,8 @@ public:
     explicit chargingStation(QObject *parent = nullptr);
     chargingStation(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent);
 
-    void draw();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+    QRectF boundingRect() const override;
 
 signals:
 

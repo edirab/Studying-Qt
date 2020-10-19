@@ -5,68 +5,49 @@ AUV::AUV(QObject *parent) : QObject(parent)
 
 }
 
-//AUV::AUV(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent){
-//    this->scene = s;
-//    this->group = g;
-//    this->parent();
-//}
 
 AUV::AUV(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent):
     QObject(parent), QGraphicsItem()
 {
     this->scene = s;
     this->group = g;
-   // this->parent();
 
     int width = scene->width();
     int height = scene->height();
 
-    this->auv_x= width - 3 * width / 5;
+    this->auv_x = width - 3 * width / 5;
     this->auv_y = height -  height / 4;
+
+    if (this->parentItem() != nullptr){
+        this->parentItem()->x();
+        this->parentItem()->y();
+        qDebug() <<  this->parentItem()->x() << " " << this->parentItem()->y() ;
+    }
 }
 
 QRectF AUV::boundingRect() const {
-  return QRectF(QPoint(auv_x - auvLen/2, auv_y - auvDiam/2),
-                QPoint(auv_x + auvLen/2 + auvDiam/2, auv_y + auvDiam/2));
+  return QRectF(QPoint(-auvLen/2, -auvDiam/2),
+                QPoint(auvLen+auvDiam/2, auvDiam));
 }
 
 
 void AUV::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 
-    /* Приступаем к отрисовке произвольной картинки
-     * */
-//    QPen penYellow(Qt::yellow);
-//    QPen penRed(Qt::red);
-//    QPen penBlack(Qt::black);
-
-//    QBrush brushYellow(Qt::yellow);
-
-//    if (auvDebug){
-//        int width = scene->width();//  100;
-//        int height = scene->height();
-//        qDebug() << "Размеры GraphicsView: "<< width << " " << height;
-//    }
-
-
-//    group->addToGroup(scene->addEllipse(auv_x+auvLen/2 - auvDiam/2,
-//                                        auv_y-auvDiam/2,
-//                                        auvDiam, auvDiam, penBlack, brushYellow));
-
-//    group->addToGroup(scene->addRect(auv_x - auvLen/2,
-//                                  auv_y - auvDiam/2,
-//                                  auvLen, auvDiam, penBlack, brushYellow));
     painter->setPen(Qt::black);
     painter->setBrush(Qt::yellow);
 
-    painter->drawEllipse(auv_x+auvLen/2 - auvDiam/2,
-                                        auv_y-auvDiam/2,
-                                        auvDiam, auvDiam);
+    //painter->drawPoint(0, 0);
+    //painter->drawEllipse(-5, -5, 5, 5);
 
-    painter->drawRect(auv_x - auvLen/2,
-                      auv_y - auvDiam/2,
-                      auvLen, auvDiam);
-//    this->scene->addItem(this);
-//    this->setPos(auv_x, auv_y);
+    painter->drawEllipse(auvLen/2 - auvDiam/2,
+                         -auvDiam/2,
+                         auvDiam,
+                         auvDiam);
+
+    painter->drawRect(-auvLen/2,
+                      -auvDiam/2,
+                      auvLen,
+                      auvDiam);
 }
 
 
@@ -103,24 +84,32 @@ void AUV::keyboardRedraw(QKeyEvent *event){
 
         if (key == Qt::Key_D) {
            auv_x += 10;
+           this->moveBy(10, 0);
         }
         else if (key == Qt::Key_A) {
            auv_x -= 10;
+           this->moveBy(-10, 0);
+
         }
         else if (key == Qt::Key_W) {
            auv_y -= 10;
+           this->moveBy(0, -10);
         }
         else if (key == Qt::Key_S) {
            auv_y += 10;
+           this->moveBy(0, 10);
+        }
+        else if (key == Qt::Key_Q){
+            auvYaw -= 5;
+            this->setRotation(auvYaw);
+        }
+        else if (key == Qt::Key_E){
+            auvYaw += 5;
+            this->setRotation(auvYaw);
         }
 
       qDebug() << "auv_x: " << auv_x << "auv_y" << auv_y ;
 
-      foreach( QGraphicsItem *item, scene->items(group->boundingRect())) {
-         if(item->group() == group ) {
-            delete item;
-         }
-      }
+      //this->scene->update(0, 0, scene->width(), scene->height());
 
-      //this->paint();
 }

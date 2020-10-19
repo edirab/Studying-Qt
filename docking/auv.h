@@ -29,7 +29,7 @@ public:
 
     // Реальные координаты в СК базовой станции
     float auvX, auvY;
-    float auvYaw;
+    float auvYaw = 0;;
 
     // Ширина поля зрения камеры
     float angleView;

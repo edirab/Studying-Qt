@@ -1,12 +1,13 @@
 #include "chargingstation.h"
 
-chargingStation::chargingStation(QObject *parent) : QObject(parent)
+chargingStation::chargingStation(QObject *parent) : QObject(parent), QGraphicsItem()
 {
 
 }
 
 
-chargingStation::chargingStation(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent): QObject(parent)
+chargingStation::chargingStation(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent):
+    QObject(parent), QGraphicsItem()
 {
     this->scene = s;
     this->group = g;
@@ -14,47 +15,31 @@ chargingStation::chargingStation(QGraphicsScene *s, QGraphicsItemGroup *g, QObje
 
     int width = scene->width();
     int height = scene->height();
+
     qDebug() << "Размеры GraphicsView: "<< width << " " << height;
+    //qDebug() << this->parentItem()->x();
 
     this->screenX = width / 2;
     this->screenY = height / 2;
 }
 
-void chargingStation::draw(){
 
-    QPen penBlack(Qt::black); // Задаём чёрную кисть
-    QPen penRed(Qt::red);   // Задаём красную кисть
+QRectF chargingStation::boundingRect() const {
+    int L = dockSize;
+    return QRectF(-L/2, -L/2, L, L);
+}
 
-    group->addToGroup(scene->addRect(screenX-dockSize/2,
-                                  screenY-dockSize/2,
-                                  dockSize, dockSize, penBlack));
+void chargingStation::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 
-    group->addToGroup(scene->addRect(screenX-dockSize/4,
-                                  screenY-dockSize/4,
-                                  dockSize/2, dockSize/2, penBlack));
+    painter->setPen(Qt::black);
+    painter->setBrush(Qt::white);
 
-    // 1
-    group->addToGroup(scene->addLine(screenX-dockSize/2,
-                                  screenY-dockSize/2,
-                                  screenX-dockSize/4,
-                                  screenY-dockSize/4, penBlack));
-    // 2
-    group->addToGroup(scene->addLine(screenX-dockSize/2 + dockSize,
-                                  screenY-dockSize/2,
-                                  screenX-dockSize/4 + dockSize / 2,
-                                  screenY-dockSize/4, penBlack));
+    int L = dockSize;
 
-    // 3
-    group->addToGroup(scene->addLine(screenX-dockSize/2,
-                                  screenY+dockSize/2,
-                                  screenX-dockSize/4,
-                                  screenY+dockSize/4, penBlack));
+    painter->drawRect(-L/2, -L/2, L, L);
+    painter->drawLine(-L/2, -L/2, L/2, L/2);
+    painter->drawLine(-L/2, L/2, L/2, -L/2);
 
-    // 4
-    group->addToGroup(scene->addLine(screenX+dockSize/2,
-                                  screenY+dockSize/2,
-                                  screenX+dockSize/2 - dockSize/4,
-                                  screenY+dockSize/4, penBlack));
-
+    painter->drawRect(-L/4, -L/4, L/2, L/2);
 }
 

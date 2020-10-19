@@ -33,17 +33,20 @@ MainWindow::MainWindow(QWidget *parent)
      * Первая координата - это левый верхний угол,
      * а Вторая - это правый нижний угол
      * */
-    this->scene->setSceneRect(0,0,this->ui->graphicsView->width(), this->ui->graphicsView->height());
-    Station = new chargingStation(scene, group_1, nullptr);
-    auv = new AUV(scene, group_2, scene);
-    //this->ui->graphicsView->scene();
-    scene->addItem(auv);
-    //auv->setPos(auv->auv_x, auv->auv_y);
-    auv->setPos(0, 0);
 
-    Station->draw();
-    //auv->paint();
-    //chargingStation Station(scene, group_1, nullptr);
+    this->sceneW = this->ui->graphicsView->width();
+    this->sceneH = this->ui->graphicsView->height();
+    this->scene->setSceneRect(0,0, sceneW, sceneH);
+
+    Station = new chargingStation(scene, group_1, nullptr);
+    //Station->setParentItem(scene);
+    scene->addItem(Station);
+    Station->setPos(sceneW/2, sceneH/2);
+
+    auv = new AUV(scene, group_2, nullptr);
+    auv->setParentItem(Station);
+    scene->addItem(auv);
+    auv->setPos(0, 0);
 
 }
 

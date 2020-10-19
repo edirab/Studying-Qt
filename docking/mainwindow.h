@@ -38,6 +38,7 @@ private:
      * */
     QTimer              *timer;
 
+    int sceneW, sceneH;
     AUV *auv;
     chargingStation *Station;
 
