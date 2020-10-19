@@ -10,6 +10,10 @@
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
 #include <QTimer>
+//#include <cmath>
+#include <QtMath>
+
+//using namespace std;
 
 class AUV : public QObject, public QGraphicsItem
 {
@@ -40,10 +44,17 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
     QRectF boundingRect() const override;
 
+    void truncateYaw();
     void keyboardRedraw(QKeyEvent *event);
     void startDocking();
 
+private:
+    int stepLin = 6;
+    int stepRot = 5;
+
+
 signals:
+    void sendCoords(int x, int y, int yaw);
 
 };
 

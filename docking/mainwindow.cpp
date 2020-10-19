@@ -4,8 +4,14 @@
 
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
-
     auv->keyboardRedraw(event);
+}
+
+void MainWindow::receiveCoords(int x, int y, int yaw){
+    //qDebug() << "received signal Coords";
+    this->ui->lineEdit_X->setText(QString::number(x));
+    this->ui->lineEdit_Y->setText(QString::number(y));
+    this->ui->lineEdit_Yaw->setText(QString::number(yaw));
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -13,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 
     this->scene = new QGraphicsScene();   // Инициализируем сцену для отрисовки
     this->ui->graphicsView->setScene(scene);
@@ -48,6 +55,9 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(auv);
     auv->setPos(0, 0);
 
+    //bool bOk = QObject::connect(auv, SIGNAL(sendCoords()), this, SLOT(receiveCoords()));
+    bool bOk = QObject::connect(auv, &AUV::sendCoords, this, &MainWindow::receiveCoords);
+    Q_ASSERT(bOk);
 }
 
 

@@ -45,9 +45,9 @@
    <property name="geometry">
     <rect>
      <x>780</x>
-     <y>190</y>
+     <y>180</y>
      <width>181</width>
-     <height>141</height>
+     <height>181</height>
     </rect>
    </property>
    <property name="title">
@@ -57,7 +57,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>110</y>
+      <y>140</y>
       <width>156</width>
       <height>21</height>
      </rect>
@@ -70,7 +70,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>80</y>
+      <y>110</y>
       <width>156</width>
       <height>21</height>
      </rect>
@@ -79,7 +79,7 @@
      <string>Сбросить положение</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="lineEdit_Y">
     <property name="geometry">
      <rect>
       <x>80</x>
@@ -89,7 +89,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEdit_X">
     <property name="geometry">
      <rect>
       <x>80</x>
@@ -129,6 +129,29 @@
     </property>
     <property name="text">
      <string>Y АНПА</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Yaw">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>80</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_auvYaw">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Курс</string>
     </property>
    </widget>
   </widget>

@@ -50,12 +50,18 @@ void AUV::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
                       auvDiam);
 }
 
+void AUV::truncateYaw(){
+    if ( auvYaw >= 360){
+        this->auvYaw -= 360;
+    }else if (auvYaw < 0 ){
+        this->auvYaw += 360;
+    }
+}
+
 
 void AUV::keyboardRedraw(QKeyEvent *event){
 
     int key=event->key(); //event->key() - целочисленный код клавиши
-    qDebug() << "Нажатие: " << key;
-
     bool useArrows = false;
 
     if (useArrows){
@@ -82,34 +88,48 @@ void AUV::keyboardRedraw(QKeyEvent *event){
         }
     }
 
-        if (key == Qt::Key_D) {
-           auv_x += 10;
-           this->moveBy(10, 0);
+        if (key == Qt::Key_E) {
+            float x_projection = stepLin * cosf(qDegreesToRadians(auvYaw+90));
+            float y_projection = stepLin * sinf(qDegreesToRadians(auvYaw+90));
+            this->moveBy(x_projection, y_projection);
         }
-        else if (key == Qt::Key_A) {
-           auv_x -= 10;
-           this->moveBy(-10, 0);
+        else if (key == Qt::Key_Q) {
+            float x_projection = stepLin * cosf(qDegreesToRadians(auvYaw-90));
+            float y_projection = stepLin * sinf(qDegreesToRadians(auvYaw-90));
+            this->moveBy(x_projection, y_projection);
 
         }
         else if (key == Qt::Key_W) {
-           auv_y -= 10;
-           this->moveBy(0, -10);
+            float x_projection = stepLin * cosf(qDegreesToRadians(auvYaw));
+            float y_projection = stepLin * sinf(qDegreesToRadians(auvYaw));
+            //qDebug() << "x+proj: " << x_projection << "y_proj" << y_projection;
+            this->moveBy(x_projection, y_projection);
         }
         else if (key == Qt::Key_S) {
-           auv_y += 10;
-           this->moveBy(0, 10);
+
+           float x_projection = stepLin * cosf(qDegreesToRadians(auvYaw));
+           float y_projection = stepLin * sinf(qDegreesToRadians(auvYaw));
+           //qDebug() << "x+proj: " << x_projection << "y_proj" << y_projection;
+           this->moveBy(- x_projection, - y_projection);
         }
-        else if (key == Qt::Key_Q){
-            auvYaw -= 5;
+        else if (key == Qt::Key_A){
+            auvYaw -= stepRot;
+            truncateYaw();
             this->setRotation(auvYaw);
         }
-        else if (key == Qt::Key_E){
-            auvYaw += 5;
+        else if (key == Qt::Key_D){
+            auvYaw += stepRot;
+            truncateYaw();
             this->setRotation(auvYaw);
         }
 
-      qDebug() << "auv_x: " << auv_x << "auv_y" << auv_y ;
+        auv_x = this->x();
+        auv_y = this->y();
+
+        emit sendCoords(auv_x, auv_y, auvYaw);
+        if (auvDebug){
+            qDebug() << "Нажатие: " << key << "x: " << auv_x << "y" << auv_y << "yaw: " <<auvYaw ;
+        }
 
       //this->scene->update(0, 0, scene->width(), scene->height());
-
 }
