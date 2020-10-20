@@ -14,6 +14,15 @@ void MainWindow::receiveCoords(int x, int y, int yaw){
     this->ui->lineEdit_Yaw->setText(QString::number(yaw));
 }
 
+
+void MainWindow::receiveViewingAngle(int angle){
+    //qDebug() << "Received angle:" << angle;
+    this->vAngle->angle = angle;
+    this->ui->labelAngleView->setText(QString("Угол обзора камеры: " + QString::number(angle)));
+    // вызвать перерисовку сцены
+    this->scene->update(0, 0, width(), height());
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MainWindow)
@@ -63,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //bool bOk = QObject::connect(auv, SIGNAL(sendCoords()), this, SLOT(receiveCoords()));
     bool bOk = QObject::connect(auv, &AUV::sendCoords, this, &MainWindow::receiveCoords);
+    bOk = bOk && QObject::connect(ui->horizontalSlider, &QSlider::valueChanged, this, &MainWindow::receiveViewingAngle);
     Q_ASSERT(bOk);
 }
 

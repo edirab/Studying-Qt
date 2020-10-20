@@ -18,8 +18,9 @@
 class AUV : public QObject, public QGraphicsItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
-    bool auvDebug;
+    bool auvDebug = false;
 
     // Экранные координаты
     int auv_x, auv_y;

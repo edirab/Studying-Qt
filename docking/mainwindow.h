@@ -10,6 +10,8 @@
 #include <QGraphicsItemGroup>
 #include <QTimer>
 
+#include <QSlider>
+
 #include <chargingstation.h>
 #include <auv.h>
 #include <viewingangle.h>
@@ -52,6 +54,7 @@ protected:
 
 public slots:
     void receiveCoords(int x, int y, int yaw);
+    void receiveViewingAngle(int angle);
 
 };
 #endif // MAINWINDOW_H
