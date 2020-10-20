@@ -61,7 +61,7 @@ void AUV::truncateYaw(){
 
 void AUV::keyboardRedraw(QKeyEvent *event){
 
-    int key=event->key(); //event->key() - целочисленный код клавиши
+    int key=event->nativeVirtualKey(); //event->key() - целочисленный код клавиши
     bool useArrows = false;
 
     if (useArrows){
@@ -89,6 +89,7 @@ void AUV::keyboardRedraw(QKeyEvent *event){
     }
 
         if (key == Qt::Key_E) {
+            //qDebug() << "Native key: " << event->nativeVirtualKey();
             float x_projection = stepLin * cosf(qDegreesToRadians(auvYaw+90));
             float y_projection = stepLin * sinf(qDegreesToRadians(auvYaw+90));
             this->moveBy(x_projection, y_projection);

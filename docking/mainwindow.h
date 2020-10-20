@@ -9,8 +9,11 @@
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
 #include <QTimer>
-#include <auv.h>
+
 #include <chargingstation.h>
+#include <auv.h>
+#include <viewingangle.h>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,7 +42,9 @@ private:
     QTimer              *timer;
 
     int sceneW, sceneH;
+
     AUV *auv;
+    viewingAngle *vAngle;
     chargingStation *Station;
 
 protected:

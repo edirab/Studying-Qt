@@ -19,12 +19,14 @@ SOURCES += \
     auv.cpp \
     chargingstation.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    viewingangle.cpp
 
 HEADERS += \
     auv.h \
     chargingstation.h \
-    mainwindow.h
+    mainwindow.h \
+    viewingangle.h
 
 FORMS += \
     mainwindow.ui

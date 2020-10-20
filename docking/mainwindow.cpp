@@ -55,6 +55,12 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(auv);
     auv->setPos(0, 0);
 
+    vAngle = new viewingAngle(scene, group_2, nullptr, 50);
+    vAngle->setParentItem(auv);
+    scene->addItem(vAngle);
+    vAngle->setPos(auv->auvLen/2, 0);
+
+
     //bool bOk = QObject::connect(auv, SIGNAL(sendCoords()), this, SLOT(receiveCoords()));
     bool bOk = QObject::connect(auv, &AUV::sendCoords, this, &MainWindow::receiveCoords);
     Q_ASSERT(bOk);
