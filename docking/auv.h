@@ -20,21 +20,17 @@ class AUV : public QObject, public QGraphicsItem
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
-    bool auvDebug = false;
+    bool mDebug = false;
 
-    // Экранные координаты
-    int auv_x, auv_y;
-
-    // Размеры в пикселях
-    int auvDiam = 30;
-    int auvLen = auvDiam * 4;
+    int mSceneX, mSceneY; // Экранные координаты
+    int mDiam = 30; // Размеры в пикселях
+    int mLen = mDiam * 4;
 
     QGraphicsItemGroup *group;
     QGraphicsScene *scene;
 
-    // Реальные координаты в СК базовой станции
-    float auvX, auvY;
-    float auvYaw = 0;;
+    float mWorldX, mWorldY; // Реальные координаты в СК базовой станции
+    float mWorldYaw = 0;
 
     // Ширина поля зрения камеры
     float angleView;

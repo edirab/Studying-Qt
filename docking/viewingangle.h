@@ -13,10 +13,10 @@ class viewingAngle : public QObject, public QGraphicsItem
     Q_OBJECT
 public:
 
-    float angle;
+    float mAngle;
 
     explicit viewingAngle(QObject *parent = nullptr);
-    viewingAngle(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent, int angle);
+    viewingAngle(QObject *parent, int mAngle);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
     QRectF boundingRect() const override;

@@ -15,8 +15,8 @@ AUV::AUV(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent):
     int width = scene->width();
     int height = scene->height();
 
-    this->auv_x = width - 3 * width / 5;
-    this->auv_y = height -  height / 4;
+    this->mSceneX = width - 3 * width / 5;
+    this->mSceneY = height -  height / 4;
 
     if (this->parentItem() != nullptr){
         this->parentItem()->x();
@@ -26,35 +26,31 @@ AUV::AUV(QGraphicsScene *s, QGraphicsItemGroup *g, QObject *parent):
 }
 
 QRectF AUV::boundingRect() const {
-  return QRectF(QPoint(-auvLen/2, -auvDiam/2),
-                QPoint(auvLen+auvDiam/2, auvDiam));
+  return QRectF(QPoint(-mLen/2, -mDiam/2),
+                QPoint(mLen+mDiam/2, mDiam));
 }
 
 
 void AUV::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 
     painter->setPen(Qt::black);
-    painter->setBrush(Qt::yellow);
+    painter->setBrush(Qt::white);
 
     //painter->drawPoint(0, 0);
     //painter->drawEllipse(-5, -5, 5, 5);
 
-    painter->drawEllipse(auvLen/2 - auvDiam/2,
-                         -auvDiam/2,
-                         auvDiam,
-                         auvDiam);
+    painter->drawEllipse(mLen/2 - mDiam/2, -mDiam/2, mDiam, mDiam);
 
-    painter->drawRect(-auvLen/2,
-                      -auvDiam/2,
-                      auvLen,
-                      auvDiam);
+    painter->setBrush(Qt::yellow);
+    painter->drawRect(-mLen/2, -mDiam/2, mLen, mDiam);
 }
 
+
 void AUV::truncateYaw(){
-    if ( auvYaw >= 360){
-        this->auvYaw -= 360;
-    }else if (auvYaw < 0 ){
-        this->auvYaw += 360;
+    if ( mWorldYaw >= 360){
+        this->mWorldYaw -= 360;
+    }else if (mWorldYaw < 0 ){
+        this->mWorldYaw += 360;
     }
 }
 
@@ -67,19 +63,19 @@ void AUV::keyboardRedraw(QKeyEvent *event){
     if (useArrows){
         switch (key) {
             case Qt::Key_Right:
-                auv_x -= 10;
+                mSceneX -= 10;
             break;
 
             case Qt::Key_Left:
-                auv_x -= 10;
+                mSceneX -= 10;
             break;
 
             case Qt::Key_Up:
-                auv_y -= 10;
+                mSceneY -= 10;
             break;
 
             case Qt::Key_Down:
-                auv_y += 10;
+                mSceneY += 10;
             break;
 
             default:
@@ -90,46 +86,46 @@ void AUV::keyboardRedraw(QKeyEvent *event){
 
         if (key == Qt::Key_E) {
             //qDebug() << "Native key: " << event->nativeVirtualKey();
-            float x_projection = stepLin * cosf(qDegreesToRadians(auvYaw+90));
-            float y_projection = stepLin * sinf(qDegreesToRadians(auvYaw+90));
+            float x_projection = stepLin * cosf(qDegreesToRadians(mWorldYaw+90));
+            float y_projection = stepLin * sinf(qDegreesToRadians(mWorldYaw+90));
             this->moveBy(x_projection, y_projection);
         }
         else if (key == Qt::Key_Q) {
-            float x_projection = stepLin * cosf(qDegreesToRadians(auvYaw-90));
-            float y_projection = stepLin * sinf(qDegreesToRadians(auvYaw-90));
+            float x_projection = stepLin * cosf(qDegreesToRadians(mWorldYaw-90));
+            float y_projection = stepLin * sinf(qDegreesToRadians(mWorldYaw-90));
             this->moveBy(x_projection, y_projection);
 
         }
         else if (key == Qt::Key_W) {
-            float x_projection = stepLin * cosf(qDegreesToRadians(auvYaw));
-            float y_projection = stepLin * sinf(qDegreesToRadians(auvYaw));
+            float x_projection = stepLin * cosf(qDegreesToRadians(mWorldYaw));
+            float y_projection = stepLin * sinf(qDegreesToRadians(mWorldYaw));
             //qDebug() << "x+proj: " << x_projection << "y_proj" << y_projection;
             this->moveBy(x_projection, y_projection);
         }
         else if (key == Qt::Key_S) {
 
-           float x_projection = stepLin * cosf(qDegreesToRadians(auvYaw));
-           float y_projection = stepLin * sinf(qDegreesToRadians(auvYaw));
+           float x_projection = stepLin * cosf(qDegreesToRadians(mWorldYaw));
+           float y_projection = stepLin * sinf(qDegreesToRadians(mWorldYaw));
            //qDebug() << "x+proj: " << x_projection << "y_proj" << y_projection;
            this->moveBy(- x_projection, - y_projection);
         }
         else if (key == Qt::Key_A){
-            auvYaw -= stepRot;
+            mWorldYaw -= stepRot;
             truncateYaw();
-            this->setRotation(auvYaw);
+            this->setRotation(mWorldYaw);
         }
         else if (key == Qt::Key_D){
-            auvYaw += stepRot;
+            mWorldYaw += stepRot;
             truncateYaw();
-            this->setRotation(auvYaw);
+            this->setRotation(mWorldYaw);
         }
 
-        auv_x = this->x();
-        auv_y = this->y();
+        mSceneX = this->x();
+        mSceneY = this->y();
 
-        emit sendCoords(auv_x, auv_y, auvYaw);
-        if (auvDebug){
-            qDebug() << "Нажатие: " << key << "x: " << auv_x << "y" << auv_y << "yaw: " <<auvYaw ;
+        emit sendCoords(mSceneX, mSceneY, mWorldYaw);
+        if (mDebug){
+            qDebug() << "Нажатие: " << key << "x: " << mSceneX << "y" << mSceneY << "yaw: " <<mWorldYaw ;
         }
 
       //this->scene->update(0, 0, scene->width(), scene->height());

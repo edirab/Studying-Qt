@@ -2,19 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QWidget>
-#include <QKeyEvent>
+//#include <QKeyEvent>
 #include <QDebug>
 #include <QWidget>
 #include <QGraphicsView>
-#include <QGraphicsScene>
-#include <QGraphicsItemGroup>
 #include <QTimer>
 
 #include <QSlider>
 
-#include <chargingstation.h>
-#include <auv.h>
-#include <viewingangle.h>
+#include <scene.h>
 
 
 QT_BEGIN_NAMESPACE
@@ -29,12 +25,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    MyScene      *myScene;
 private:
     Ui::MainWindow *ui;
 
-    QGraphicsScene      *scene;     // Объявляем сцену для отрисовки
-    QGraphicsItemGroup  *group_1;   // Объявляем первую группу элементов
-    QGraphicsItemGroup  *group_2;
     /* Таймер для задержки отрисовки.
      * Дело в том, что при создании окна и виджета
      * необходимо некоторое время, чтобы родительский слой
@@ -45,12 +39,8 @@ private:
 
     int sceneW, sceneH;
 
-    AUV *auv;
-    viewingAngle *vAngle;
-    chargingStation *Station;
-
 protected:
-   virtual void keyPressEvent(QKeyEvent *event);
+   //virtual void keyPressEvent(QKeyEvent *event);
 
 public slots:
     void receiveCoords(int x, int y, int yaw);
