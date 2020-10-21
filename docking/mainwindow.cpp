@@ -1,6 +1,35 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
+void MainWindow::resizeEvent(QResizeEvent *event){
+
+    bool debugResize = false;
+    if (event->oldSize() != QSize(-1, -1)){
+
+        int deltaX = this->size().width() - event->oldSize().width();
+        int deltaY = this->size().height() - event->oldSize().height();
+
+        QPoint camGroupBoxCurrentPos = this->ui->groupBoxCamera->pos();
+        QPoint posGroupBoxCurrentPos = this->ui->groupBoxPosition->pos();
+        QPoint labelHintCurrentPos = this->ui->labelHint->pos();
+
+        QSize grahicsViewCurrSize = this->ui->graphicsView->size();
+
+        this->ui->graphicsView->resize(grahicsViewCurrSize.width()+deltaX, grahicsViewCurrSize.height()+deltaY);
+        this->ui->groupBoxCamera->move(camGroupBoxCurrentPos.x() + deltaX, camGroupBoxCurrentPos.y());
+        this->ui->groupBoxPosition->move(posGroupBoxCurrentPos.x() + deltaX, posGroupBoxCurrentPos.y());
+        this->ui->labelHint->move(labelHintCurrentPos.x() + deltaX, labelHintCurrentPos.y());
+
+        if (debugResize){
+            qDebug() << "Main Window size: " << this->size() << ", Old size:  " << event->oldSize() << " delta: " << deltaX;
+            qDebug() << camGroupBoxCurrentPos << " " << posGroupBoxCurrentPos;
+            qDebug() << "New Pos: " << QPoint(camGroupBoxCurrentPos.x() + deltaX, camGroupBoxCurrentPos.y());
+        }
+ }
+}
+
+
 /*
     Slot 1
 */

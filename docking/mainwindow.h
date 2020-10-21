@@ -41,6 +41,7 @@ private:
 
 protected:
    //virtual void keyPressEvent(QKeyEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 public slots:
     void receiveCoords(int x, int y, int yaw);
