@@ -1,6 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <QThread>
 #include <QObject>
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
@@ -26,6 +27,12 @@ public:
     AUV *auv;
     viewingAngle *vAngle;
     chargingStation *Station;
+
+    QVector<QVector<float>> data;
+
+public slots:
+    void readFile();
+    void startVisualization();
 
 signals:
 

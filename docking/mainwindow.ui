@@ -72,7 +72,7 @@
      <string>Начать стыковку</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_resetPos">
+   <widget class="QPushButton" name="pushButton_loadFile">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -82,7 +82,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Сбросить положение</string>
+     <string>Загрузить файл</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_Y">
