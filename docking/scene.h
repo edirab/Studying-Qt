@@ -1,6 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <QTimer>
 #include <QThread>
 #include <QObject>
 #include <QGraphicsScene>
@@ -19,19 +20,24 @@ public:
 
     void keyPressEvent(QKeyEvent *event) override;
 
-    int mW, mH;
+    int mWidth, mHeight;
 
-    QGraphicsItemGroup  *group_1;
-    QGraphicsItemGroup  *group_2;
+    QGraphicsItemGroup  *mGroupStation;
+    QGraphicsItemGroup  *mGroupAUV;
 
     AUV *auv;
     viewingAngle *vAngle;
     chargingStation *Station;
 
     QVector<QVector<float>> data;
+    QTimer *animTimer;
+
+private:
+    int animationStep = 5; // ms
 
 public slots:
     void readFile();
+    void AnimationStep();
     void startVisualization();
 
 signals:

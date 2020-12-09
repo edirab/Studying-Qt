@@ -46,7 +46,7 @@ protected:
 public slots:
     void receiveCoords(int x, int y, int yaw);
     void receiveViewingAngle(int angle);
-    //void readFile();
+    void setButtonStartAnimationActive();
 
 };
 #endif // MAINWINDOW_H

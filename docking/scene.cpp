@@ -3,22 +3,22 @@
 MyScene::MyScene(QWidget *parent)
     : QGraphicsScene(parent)
 {
-    mW = parent->width();
-    mH = parent->height();
+    mWidth = parent->width();
+    mHeight = parent->height();
 
-    this->setSceneRect(0, 0, mW, mH);
+    this->setSceneRect(0, 0, mWidth, mHeight);
 
-    this->group_1 = new QGraphicsItemGroup();
-    this->group_2 = new QGraphicsItemGroup();
+    this->mGroupStation = new QGraphicsItemGroup();
+    this->mGroupAUV = new QGraphicsItemGroup();
 
     //this->addEllipse(0, 0, 100, 100, QPen(Qt::red));
 
-    Station = new chargingStation(this, group_1, this);
+    Station = new chargingStation(this, mGroupStation, this);
     //Station->setParentItem(scene);
     this->addItem(Station);
-    Station->setPos(mW/2, mH/2);
+    Station->setPos(mWidth/2, mHeight/2);
 
-    auv = new AUV(this, group_2, this);
+    auv = new AUV(this, mGroupAUV, this);
     auv->setParentItem(Station);
     this->addItem(auv);
     auv->setPos(0, 0);
@@ -28,8 +28,11 @@ MyScene::MyScene(QWidget *parent)
     this->addItem(vAngle);
     vAngle->setPos(auv->mLen/2, 0);
 
-    //bool bOk = QObject::connect(ui->pushButton_loadFile, &QPushButton::clicked, this, &MainWindow::readFile);
-    //Q_ASSERT(bOk);
+    animTimer = new QTimer;
+    animTimer->setInterval(this->animationStep);
+
+    bool bOk = QObject::connect(this->animTimer, &QTimer::timeout, this, &MyScene::AnimationStep);
+    Q_ASSERT(bOk);
 }
 
 void MyScene::keyPressEvent(QKeyEvent *event) {
@@ -79,10 +82,37 @@ void msleep(int ms)
 }
 
 
+void MyScene::AnimationStep(){
+
+    static int i = 0;
+    qDebug() << "Animation step:" << i << "\n";
+
+    if (i < 8000){
+        // Time, X (up), Z(right), Yaw (Counter Clockwise)
+        float X_ = data[i][1] * 66.7;
+        float Z_ = data[i][2] * 66.7;
+
+        int x_projection = int(Z_);
+        //int y_projection = (this->mH - int(float(X_)) ) ;
+        int y_projection = (- int(float(X_)) ) ;
+
+        qDebug() << x_projection << " " << y_projection;
+        auv->setPos(x_projection, y_projection);
+        this->update(0, 0, this->width(), this->height());
+        i++;
+    }
+    else {
+        animTimer->stop();
+    }
+}
+
+
 /*
     Slot 2
 */
 void MyScene::startVisualization(){
+
+    animTimer->start();
     qDebug() << "Inside Visualization \n";
 
 //    for(int i = 0; i < this->data.length(); i++){
@@ -118,15 +148,15 @@ void MyScene::startVisualization(){
 //    this->update(0, 0, this->width(), this->height());
 //    msleep(50);
 
-    static int i = 0;
-     //Time, X (up), Z(right), Yaw (Counter Clockwise)
-    int x_projection = int(data[i][1] * 10);
-    int y_projection = int(data[i][2] * 10);
-    qDebug() << x_projection << " " << y_projection;
-    auv->setPos(x_projection, y_projection);
-    this->update(0, 0, this->width(), this->height());
-    msleep(5);
-    i++;
+//    static int i = 0;
+//     //Time, X (up), Z(right), Yaw (Counter Clockwise)
+//    int x_projection = int(data[i][1] * 10);
+//    int y_projection = int(data[i][2] * 10);
+//    qDebug() << x_projection << " " << y_projection;
+//    auv->setPos(x_projection, y_projection);
+//    this->update(0, 0, this->width(), this->height());
+//    msleep(5);
+//    i++;
 
 }
 
