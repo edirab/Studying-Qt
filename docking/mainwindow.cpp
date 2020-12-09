@@ -51,9 +51,18 @@ void MainWindow::receiveViewingAngle(int angle){
     this->myScene->update(0, 0, width(), height()); // вызвать перерисовку сцены
 }
 
+/*
+    Slot 3
+*/
+
+void MainWindow::setButtonStartAnimationActive(){
+    qDebug() << "Activate Start Anim Push Button \n";
+    this->ui->pushButton_startDocking->setEnabled(true);
+
+}
 
 
-
+// Constructor
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MainWindow)
@@ -72,13 +81,19 @@ MainWindow::MainWindow(QWidget *parent)
     this->timer->start(50);
 
     this->ui->graphicsView->setScene(myScene);
+    this->ui->pushButton_startDocking->setEnabled(false);
 
+    /*
+    Соединяем сигналы со слотами
+    */
     bool bOk = QObject::connect(myScene->auv, SIGNAL(sendCoords(int, int, int)), this, SLOT(receiveCoords(int, int, int)));
     //bool bOk = QObject::connect(myScene->auv, &AUV::sendCoords, this, &MainWindow::receiveCoords);
     bOk = bOk && QObject::connect(ui->horizontalSlider, &QSlider::valueChanged, this, &MainWindow::receiveViewingAngle);
 
     bOk = bOk && QObject::connect(ui->pushButton_loadFile, &QPushButton::clicked, myScene, &MyScene::readFile);
     bOk = bOk && QObject::connect(ui->pushButton_startDocking, &QPushButton::clicked, myScene, &MyScene::startVisualization);
+    bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadSuccessful, this, &MainWindow::setButtonStartAnimationActive);
+
     Q_ASSERT(bOk);
 }
 

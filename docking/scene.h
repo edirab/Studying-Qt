@@ -41,6 +41,7 @@ public slots:
     void startVisualization();
 
 signals:
+    void fileReadSuccessful();
 
 };
 

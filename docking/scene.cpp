@@ -74,6 +74,7 @@ void MyScene::readFile(){
     for (int i = 0; i < data.length(); i++){
         qDebug() << "Data: " << this->data[i];
     }
+    emit fileReadSuccessful();
 }
 
 void msleep(int ms)
@@ -114,50 +115,6 @@ void MyScene::startVisualization(){
 
     animTimer->start();
     qDebug() << "Inside Visualization \n";
-
-//    for(int i = 0; i < this->data.length(); i++){
-
-//        //float x_projection = stepLin * cosf(qDegreesToRadians(mWorldYaw+90));
-//        //float y_projection = stepLin * sinf(qDegreesToRadians(mWorldYaw+90));
-
-//        // Time, X (up), Z(right), Yaw (Counter Clockwise)
-//        int x_projection = int(data[i][1] * 50);
-//        int y_projection = int(data[i][2] * 50);
-//        qDebug() << x_projection << " " << y_projection;
-//        auv->setPos(x_projection, y_projection);
-//        this->update(0, 0, this->width(), this->height());
-//        msleep(5);
-//    }
-    //auv->moveBy(50, 50);
-//    auv->setPos(50, 50);
-//    this->update(0, 0, this->width(), this->height());
-//    msleep(50);
-//    auv->setPos(0, 0);
-//    this->update(0, 0, this->width(), this->height());
-//    msleep(50);
-//    auv->setPos(50, 50);
-//    this->update(0, 0, this->width(), this->height());
-//    msleep(50);
-//    auv->setPos(0, 0);
-//    this->update(0, 0, this->width(), this->height());
-//    msleep(50);
-//    auv->setPos(50, 50);
-//    this->update(0, 0, this->width(), this->height());
-//    msleep(50);
-//    auv->setPos(0, 0);
-//    this->update(0, 0, this->width(), this->height());
-//    msleep(50);
-
-//    static int i = 0;
-//     //Time, X (up), Z(right), Yaw (Counter Clockwise)
-//    int x_projection = int(data[i][1] * 10);
-//    int y_projection = int(data[i][2] * 10);
-//    qDebug() << x_projection << " " << y_projection;
-//    auv->setPos(x_projection, y_projection);
-//    this->update(0, 0, this->width(), this->height());
-//    msleep(5);
-//    i++;
-
 }
 
 
