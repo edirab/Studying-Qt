@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QThread>
 #include <QObject>
+#include <QFileDialog>
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
 

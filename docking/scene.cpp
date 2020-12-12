@@ -46,12 +46,15 @@ void MyScene::keyPressEvent(QKeyEvent *event) {
 void MyScene::readFile(){
     qDebug() << "In Read file \n";
 
+    QString file_path = QFileDialog::getOpenFileName(0, "Выберите файл с данными", "../docking/", "*.dat *.txt");
+
     // открываем файл
-    QFile file("../coords.dat");
+    QFile file(file_path);
     if(!file.open(QIODevice::ReadOnly)) {
         qDebug() << "error " << file.errorString() << "\n";
     }
 
+    int line_number = 1;
     QTextStream in(&file);
 
     while(!in.atEnd()) {
@@ -61,10 +64,19 @@ void MyScene::readFile(){
         QStringList fields = line.split(" ");
         //qDebug() << fields << "\n";
 
-        a[0] = fields.at(0).toDouble();
-        a[1] = fields.at(1).toDouble();
-        a[2] = fields.at(2).toDouble();
-        a[3] = fields.at(3).toDouble();
+        if (fields.length() == 4) {
+            a[0] = fields.at(0).toDouble();
+            a[1] = fields.at(1).toDouble();
+            a[2] = fields.at(2).toDouble();
+            a[3] = fields.at(3).toDouble();
+            line_number++;
+        } else {
+            qDebug() << "В формате данных обнаружена ошибка на строке " << line_number <<":\n";
+            qDebug() << line << ".\n";
+            qDebug() << "Проверьте целостность файла";
+            break;
+        }
+
         //qDebug() << a << "\n";
         this->data.append(a);
     }
