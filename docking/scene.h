@@ -44,6 +44,7 @@ public slots:
 signals:
     void fileReadSuccessful();
     void fileReadFailed(QString);
+    void sendCoordsDuringAnimation(float, float, float);
 
 };
 

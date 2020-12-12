@@ -72,6 +72,14 @@ void MainWindow::showInformationMessage(QString error_msg){
     reply = QMessageBox::critical /*information*/(this, tr("Ошибка во входных данных"), error_msg);
 }
 
+/*
+    Slot 5
+*/
+void MainWindow::receiveCoordsDuringAnimation(float X_, float Z_, float Yaw){
+    this->ui->lineEdit_X->setText(QString::number(X_));
+    this->ui->lineEdit_Y->setText(QString::number(Z_));
+    this->ui->lineEdit_Yaw->setText(QString::number(Yaw));
+}
 
 // Constructor
 MainWindow::MainWindow(QWidget *parent)
@@ -105,6 +113,7 @@ MainWindow::MainWindow(QWidget *parent)
     bOk = bOk && QObject::connect(ui->pushButton_startDocking, &QPushButton::clicked, myScene, &MyScene::startVisualization);
     bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadSuccessful, this, &MainWindow::setButtonStartAnimationActive);
     bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadFailed, this, &MainWindow::showInformationMessage);
+    bOk = bOk && QObject::connect(this->myScene , &MyScene::sendCoordsDuringAnimation, this, &MainWindow::receiveCoordsDuringAnimation);
     Q_ASSERT(bOk);
 }
 

@@ -110,18 +110,19 @@ void MyScene::AnimationStep(){
 
     if (i < 8000){
         // Time, X (up), Z(right), Yaw (Counter Clockwise)
-        float X_ = data[i][1] * 0.5 * SCALE_FACTOR;
-        float Z_ = data[i][2] * 0.5 * SCALE_FACTOR;
+        float X_ = data[i][1] ;
+        float Z_ = data[i][2] ;
         float Yaw = data[i][3];
 
-        int x_projection = int(Z_);
-        int y_projection = (- int(float(X_)) ) ;
+        int x_projection = int(Z_ * 0.5 * SCALE_FACTOR);
+        int y_projection = - int(X_ * 0.5 * SCALE_FACTOR) ;
         int yaw_screen = ( Yaw - 90); // Потому что изначально аппарат был нарисован боком.
-
         qDebug() << x_projection << " " << y_projection << " " << yaw_screen << " " << Yaw;
+
         auv->setPos(x_projection, y_projection);
         auv->setRotation( yaw_screen );
-        this->update(0, 0, this->width(), this->height());
+        emit sendCoordsDuringAnimation(X_, Z_, Yaw);
+        //this->update(0, 0, this->width(), this->height());
         i++;
     }
     else {

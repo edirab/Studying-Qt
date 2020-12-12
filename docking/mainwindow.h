@@ -49,6 +49,7 @@ public slots:
     void receiveViewingAngle(int angle);
     void setButtonStartAnimationActive();
     void showInformationMessage(QString);
+    void receiveCoordsDuringAnimation(float, float, float);
 
 };
 #endif // MAINWINDOW_H
