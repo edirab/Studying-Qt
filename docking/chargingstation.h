@@ -1,6 +1,8 @@
 #ifndef CHARGINGSTATION_H
 #define CHARGINGSTATION_H
 
+#include "parameters.h"
+
 #include <QObject>
 #include <QGraphicsItem>
 
@@ -10,6 +12,7 @@
 #include <QGraphicsItemGroup>
 #include <QTimer>
 
+
 class chargingStation : public QObject, public QGraphicsItem
 {
     Q_OBJECT
@@ -18,7 +21,7 @@ public:
     int screenX, screenY;
 
     // Размеры в пикселях
-    int dockSize = 100;
+    int dockSize = 2 * SCALE_FACTOR;
 
     QGraphicsItemGroup *group;
     QGraphicsScene *scene;

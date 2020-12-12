@@ -1,19 +1,21 @@
 #ifndef AUV_H
 #define AUV_H
 
-#include <QObject>
-#include <QGraphicsItem>
+#include "parameters.h"
 
+#include <QObject>
 #include <QDebug>
+
 #include <QKeyEvent>
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QGraphicsItem>
 #include <QGraphicsItemGroup>
 #include <QTimer>
-//#include <cmath>
 #include <QtMath>
 
 //using namespace std;
+
 
 class AUV : public QObject, public QGraphicsItem
 {
@@ -23,8 +25,8 @@ public:
     bool mDebug = false;
 
     int mSceneX, mSceneY; // Экранные координаты
-    int mDiam = 30; // Размеры в пикселях
-    int mLen = mDiam * 4;
+    int mDiam = 0.45 * SCALE_FACTOR; // Размеры в пикселях
+    int mLen = 3 * SCALE_FACTOR;
 
     QGraphicsItemGroup *group;
     QGraphicsScene *scene;

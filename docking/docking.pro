@@ -27,6 +27,7 @@ HEADERS += \
     auv.h \
     chargingstation.h \
     mainwindow.h \
+    parameters.h \
     scene.h \
     viewingangle.h
 

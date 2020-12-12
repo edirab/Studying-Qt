@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QWidget>
+#include <QMessageBox>
 //#include <QKeyEvent>
 #include <QDebug>
 #include <QWidget>
@@ -47,6 +48,7 @@ public slots:
     void receiveCoords(int x, int y, int yaw);
     void receiveViewingAngle(int angle);
     void setButtonStartAnimationActive();
+    void showInformationMessage(QString);
 
 };
 #endif // MAINWINDOW_H

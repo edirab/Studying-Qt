@@ -54,11 +54,22 @@ void MainWindow::receiveViewingAngle(int angle){
 /*
     Slot 3
 */
-
 void MainWindow::setButtonStartAnimationActive(){
     qDebug() << "Activate Start Anim Push Button \n";
     this->ui->pushButton_startDocking->setEnabled(true);
 
+}
+
+
+/*
+    Slot 4
+*/
+void MainWindow::showInformationMessage(QString error_msg){
+    qDebug() << "Showing info massage \n";
+
+    QString msg = "Oh-la-la";
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::critical /*information*/(this, tr("Ошибка во входных данных"), error_msg);
 }
 
 
@@ -93,7 +104,7 @@ MainWindow::MainWindow(QWidget *parent)
     bOk = bOk && QObject::connect(ui->pushButton_loadFile, &QPushButton::clicked, myScene, &MyScene::readFile);
     bOk = bOk && QObject::connect(ui->pushButton_startDocking, &QPushButton::clicked, myScene, &MyScene::startVisualization);
     bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadSuccessful, this, &MainWindow::setButtonStartAnimationActive);
-
+    bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadFailed, this, &MainWindow::showInformationMessage);
     Q_ASSERT(bOk);
 }
 
