@@ -11,12 +11,15 @@ MyScene::MyScene(QWidget *parent)
     this->mGroupStation = new QGraphicsItemGroup();
     this->mGroupAUV = new QGraphicsItemGroup();
 
-    //this->addEllipse(0, 0, 100, 100, QPen(Qt::red));
-
     Station = new chargingStation(this, mGroupStation, this);
     //Station->setParentItem(scene);
     this->addItem(Station);
     Station->setPos(mWidth/2, mHeight/2);
+
+    trajectory = new Trajectory(this, this);
+    trajectory->setParentItem(Station);
+    this->addItem(trajectory);
+    trajectory->setPos(0, 0);
 
     auv = new AUV(this, mGroupAUV, this);
     auv->setParentItem(Station);
@@ -74,17 +77,18 @@ void MyScene::readFile(){
             line_number++;
         } else {
             dataIsCoorect = false;
-            QString error_msg = "";
-            error_msg += "<p> В файле <b>" + file_path + "</b> обнаружена ошибка на строке </p>";
-            error_msg += "<p>" + QString::number(line_number) + ": " + QString(line) + "</p>";
-            error_msg +="<p> Ожидается 4 числовых параметра вместо " + QString::number(fields.length()) + ".</p>";
-            error_msg += "<p>Проверьте целостность файла и повторите попытку.</p>";
-            qDebug() << error_msg;
+                QString error_msg = "";
+                error_msg += "<p> В файле <b>" + file_path + "</b> обнаружена ошибка на строке </p>";
+                error_msg += "<p>" + QString::number(line_number) + ": " + QString(line) + "</p>";
+                error_msg +="<p> Ожидается 4 числовых параметра вместо " + QString::number(fields.length()) + ".</p>";
+                error_msg += "<p>Проверьте целостность файла и повторите попытку.</p>";
+                qDebug() << error_msg;
             emit fileReadFailed(error_msg);
             break;
         }
         //qDebug() << a << "\n";
         this->data.append(one_line);
+        this->trajectory->data.append(one_line);
     }
 
     file.close();
@@ -105,14 +109,14 @@ void msleep(int ms)
 
 void MyScene::AnimationStep(){
 
-    static int i = 0;
-    qDebug() << "Animation step:" << i << "\n";
 
-    if (i < 8000){
+    qDebug() << "Animation step:" << animIteration << "\n";
+
+    if (animIteration < 8000){
         // Time, X (up), Z(right), Yaw (Counter Clockwise)
-        float X_ = data[i][1] ;
-        float Z_ = data[i][2] ;
-        float Yaw = data[i][3];
+        float X_ = data[animIteration][1] ;
+        float Z_ = data[animIteration][2] ;
+        float Yaw = data[animIteration][3];
 
         int x_projection = int(Z_ * 0.5 * SCALE_FACTOR);
         int y_projection = - int(X_ * 0.5 * SCALE_FACTOR) ;
@@ -121,9 +125,11 @@ void MyScene::AnimationStep(){
 
         auv->setPos(x_projection, y_projection);
         auv->setRotation( yaw_screen );
+
         emit sendCoordsDuringAnimation(X_, Z_, Yaw);
+        emit sendCurrentIterationStep(animIteration, 8000);
         //this->update(0, 0, this->width(), this->height());
-        i++;
+        animIteration++;
     }
     else {
         animTimer->stop();
@@ -142,8 +148,13 @@ void MyScene::startVisualization(){
 
 
 
+/*
+    Slot 2
+*/
+void MyScene::drawTrajectory(){
 
-
+    qDebug() << "Здесь отобразим траекторию";
+}
 
 
 

@@ -21,6 +21,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     scene.cpp \
+    trajectory.cpp \
     viewingangle.cpp
 
 HEADERS += \
@@ -29,6 +30,7 @@ HEADERS += \
     mainwindow.h \
     parameters.h \
     scene.h \
+    trajectory.h \
     viewingangle.h
 
 FORMS += \

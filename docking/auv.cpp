@@ -43,6 +43,9 @@ void AUV::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 
     painter->setBrush(Qt::yellow);
     painter->drawRect(-mLen/2, -mDiam/2, mLen, mDiam);
+
+    //this->scene->update(0, 0, scene->width(), scene->height());
+    this->scene->update(100, 100, scene->width() - 100, scene->height() - 100);
 }
 
 

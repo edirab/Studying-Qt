@@ -69,7 +69,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Начать стыковку</string>
+     <string>Начать обход</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_loadFile">
@@ -169,7 +169,7 @@
      <string>Курс</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
+   <widget class="QCheckBox" name="checkBox_showTrajectory">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -287,7 +287,7 @@
     <enum>Qt::RichText</enum>
    </property>
   </widget>
-  <widget class="QSlider" name="horizontalSlider_2">
+  <widget class="QSlider" name="hSlider_timeline">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -296,21 +296,27 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>8000</number>
+   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_timeline">
    <property name="geometry">
     <rect>
-     <x>890</x>
+     <x>880</x>
      <y>510</y>
-     <width>47</width>
-     <height>13</height>
+     <width>71</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>0/0</string>
+    <string>1/8000</string>
    </property>
   </widget>
  </widget>

@@ -13,6 +13,8 @@ void MainWindow::resizeEvent(QResizeEvent *event){
         QPoint camGroupBoxCurrentPos = this->ui->groupBoxCamera->pos();
         QPoint posGroupBoxCurrentPos = this->ui->groupBoxPosition->pos();
         QPoint labelHintCurrentPos = this->ui->labelHint->pos();
+        QPoint hSliderCurrentPos = this->ui->hSlider_timeline->pos();
+        QPoint labelTimelineCurrentPos = this->ui->label_timeline->pos();
 
         QSize grahicsViewCurrSize = this->ui->graphicsView->size();
 
@@ -20,6 +22,10 @@ void MainWindow::resizeEvent(QResizeEvent *event){
         this->ui->groupBoxCamera->move(camGroupBoxCurrentPos.x() + deltaX, camGroupBoxCurrentPos.y());
         this->ui->groupBoxPosition->move(posGroupBoxCurrentPos.x() + deltaX, posGroupBoxCurrentPos.y());
         this->ui->labelHint->move(labelHintCurrentPos.x() + deltaX, labelHintCurrentPos.y());
+
+        //this->ui->hSlider_timeline->setSizeIncrement(deltaX, 0);
+        this->ui->hSlider_timeline->move(hSliderCurrentPos.x(), hSliderCurrentPos.y() + deltaY);
+        this->ui->label_timeline->move(labelTimelineCurrentPos.x() + deltaX, labelTimelineCurrentPos.y() + deltaY);
 
         if (debugResize){
             qDebug() << "Main Window size: " << this->size() << ", Old size:  " << event->oldSize() << " delta: " << deltaX;
@@ -81,6 +87,13 @@ void MainWindow::receiveCoordsDuringAnimation(float X_, float Z_, float Yaw){
     this->ui->lineEdit_Yaw->setText(QString::number(Yaw));
 }
 
+void MainWindow::updateSliderAndLabel(int currentStep, int total){
+    qDebug() << "Setting slider step... \n";
+    this->ui->hSlider_timeline->setValue(currentStep);
+    QString labelText = QString::number(currentStep) + "/" + QString::number(total);
+    this->ui->label_timeline->setText(labelText);
+}
+
 // Constructor
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
@@ -114,6 +127,8 @@ MainWindow::MainWindow(QWidget *parent)
     bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadSuccessful, this, &MainWindow::setButtonStartAnimationActive);
     bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadFailed, this, &MainWindow::showInformationMessage);
     bOk = bOk && QObject::connect(this->myScene , &MyScene::sendCoordsDuringAnimation, this, &MainWindow::receiveCoordsDuringAnimation);
+    bOk = bOk && QObject::connect(this->myScene , &MyScene::sendCurrentIterationStep, this, &MainWindow::updateSliderAndLabel);
+    bOk = bOk && QObject::connect(ui->checkBox_showTrajectory, &QCheckBox::clicked, myScene , &MyScene::drawTrajectory);
     Q_ASSERT(bOk);
 }
 

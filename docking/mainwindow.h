@@ -50,6 +50,12 @@ public slots:
     void setButtonStartAnimationActive();
     void showInformationMessage(QString);
     void receiveCoordsDuringAnimation(float, float, float);
-
+    void updateSliderAndLabel(int, int);
 };
 #endif // MAINWINDOW_H
+
+
+
+
+
+
