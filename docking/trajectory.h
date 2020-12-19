@@ -19,14 +19,16 @@ public:
 
     QGraphicsScene *scene;
     QVector<QVector<float>> data;
+    //int &animIteration_ref;
+    int *animIteration_ptr = nullptr;
 
-    Trajectory(QGraphicsScene *s, QObject *parent);
+    Trajectory(QGraphicsScene *s, QObject *parent, int *animIteration);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
     QRectF boundingRect() const override;
 
 public slots:
-    void getAnimIteration(int, int);
+    //void getAnimIteration(int, int);
 };
 
 #endif // TRAJECTORY_H

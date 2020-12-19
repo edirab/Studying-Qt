@@ -71,6 +71,9 @@
     <property name="text">
      <string>Начать обход</string>
     </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_loadFile">
     <property name="geometry">
@@ -140,7 +143,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Y АНПА</string>
+     <string>Z АНПА</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_Yaw">
@@ -281,7 +284,7 @@
     <set>Qt::ImhMultiLine</set>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Используйте &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;WASD &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;для &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;управления АНПА по &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;маршу и курсу, &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;E и Q -&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;/&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;для движения по лагу&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Выберите файл, содержащий&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;записи с временными метками и&lt;/p&gt;&lt;p align=&quot;center&quot;&gt; кооридндатами в определённом&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;формате&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="textFormat">
     <enum>Qt::RichText</enum>

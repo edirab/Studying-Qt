@@ -1,7 +1,7 @@
 #include "trajectory.h"
 
-Trajectory::Trajectory(QGraphicsScene *s, QObject *parent):
-    QObject(parent), QGraphicsItem()
+Trajectory::Trajectory(QGraphicsScene *s, QObject *parent, int* animIteration):
+    QObject(parent), QGraphicsItem(), animIteration_ptr(animIteration)
 {
     this->scene = s;
 
@@ -16,9 +16,12 @@ QRectF Trajectory::boundingRect() const {
     return QRectF(0, 0, width, height);
 }
 
-
+/*
+Сделано неоптимально, программа тормизит
+*/
 void Trajectory::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 
+    //qDebug() << "Anim step in Trajectory" << *animIteration_ptr << "\n";
     painter->setPen(Qt::blue);
     painter->setBrush(Qt::transparent);
 
@@ -36,7 +39,7 @@ void Trajectory::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidg
         y_projection_prev = - int(X_ * 0.5 * SCALE_FACTOR) ;
     }
 
-    for (int i = 0; i < data.size() - 1; i++) {
+    for (int i = 0; i < (*animIteration_ptr) - 1 /*data.size() - 1*/; i++) {
 
         float X_ = data[i][1] ;
         float Z_ = data[i][2] ;

@@ -16,7 +16,7 @@ MyScene::MyScene(QWidget *parent)
     this->addItem(Station);
     Station->setPos(mWidth/2, mHeight/2);
 
-    trajectory = new Trajectory(this, this);
+    trajectory = new Trajectory(this, this, &animIteration);
     trajectory->setParentItem(Station);
     this->addItem(trajectory);
     trajectory->setPos(0, 0);
@@ -107,10 +107,13 @@ void msleep(int ms)
 }
 
 
+/*
+    Slot 2
+*/
 void MyScene::AnimationStep(){
 
 
-    qDebug() << "Animation step:" << animIteration << "\n";
+    //qDebug() << "Animation step:" << animIteration << "\n";
 
     if (animIteration < 8000){
         // Time, X (up), Z(right), Yaw (Counter Clockwise)
@@ -121,7 +124,7 @@ void MyScene::AnimationStep(){
         int x_projection = int(Z_ * 0.5 * SCALE_FACTOR);
         int y_projection = - int(X_ * 0.5 * SCALE_FACTOR) ;
         int yaw_screen = ( Yaw - 90); // Потому что изначально аппарат был нарисован боком.
-        qDebug() << x_projection << " " << y_projection << " " << yaw_screen << " " << Yaw;
+        //qDebug() << x_projection << " " << y_projection << " " << yaw_screen << " " << Yaw;
 
         auv->setPos(x_projection, y_projection);
         auv->setRotation( yaw_screen );
@@ -138,31 +141,44 @@ void MyScene::AnimationStep(){
 
 
 /*
-    Slot 2
+    Slot 3
 */
-void MyScene::startVisualization(){
+void MyScene::startAminTimer(){
 
     animTimer->start();
-    qDebug() << "Inside Visualization \n";
+    qDebug() << "Запуск таймера \n";
 }
 
 
 
 /*
-    Slot 2
+    Slot 4
 */
-void MyScene::drawTrajectory(){
+void MyScene::toggleTrajectory(){
 
     qDebug() << "Здесь отобразим траекторию";
 }
 
 
 
+/*
+    Slot 5
+*/
+void MyScene::stopAnimTimer(){
 
+    animTimer->stop();
+    qDebug() << "Останов таймера \n";
+}
 
-
-
-
+/*
+    Slot 6
+*/
+void MyScene::sliderMoved(int pos){
+    qDebug() << "Slider pos: " << pos;
+    this->animIteration = pos;
+    emit AnimationStep();
+    this->update(0, 0, width(), height());
+}
 
 
 

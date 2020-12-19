@@ -21,6 +21,7 @@ public:
 
     void keyPressEvent(QKeyEvent *event) override;
 
+
     int mWidth, mHeight;
 
     QGraphicsItemGroup  *mGroupStation;
@@ -42,8 +43,11 @@ private:
 public slots:
     void readFile();
     void AnimationStep();
-    void startVisualization();
-    void drawTrajectory();
+    void startAminTimer();
+    void stopAnimTimer();
+    void toggleTrajectory();
+    void sliderMoved(int);
+
 
 signals:
     void fileReadSuccessful();

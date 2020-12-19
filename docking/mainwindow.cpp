@@ -63,7 +63,16 @@ void MainWindow::receiveViewingAngle(int angle){
 void MainWindow::setButtonStartAnimationActive(){
     qDebug() << "Activate Start Anim Push Button \n";
     this->ui->pushButton_startDocking->setEnabled(true);
+    this->ui->hSlider_timeline->setEnabled(true);
 
+    QString start_hint = "<html> \
+                        <head/> \
+                        <body> \
+                        <p align=\"center\">Нажмите \"Начать обход\"</p> \
+                        <p align=\"center\">для запуска отображения</p> \
+                        </body></html>";
+
+    this->ui->labelHint->setText(start_hint);
 }
 
 
@@ -71,7 +80,7 @@ void MainWindow::setButtonStartAnimationActive(){
     Slot 4
 */
 void MainWindow::showInformationMessage(QString error_msg){
-    qDebug() << "Showing info massage \n";
+    //qDebug() << "Showing info massage \n";
 
     QString msg = "Oh-la-la";
     QMessageBox::StandardButton reply;
@@ -87,11 +96,41 @@ void MainWindow::receiveCoordsDuringAnimation(float X_, float Z_, float Yaw){
     this->ui->lineEdit_Yaw->setText(QString::number(Yaw));
 }
 
+/*
+    Slot 6
+*/
 void MainWindow::updateSliderAndLabel(int currentStep, int total){
-    qDebug() << "Setting slider step... \n";
+    //qDebug() << "Setting slider step... \n";
     this->ui->hSlider_timeline->setValue(currentStep);
     QString labelText = QString::number(currentStep) + "/" + QString::number(total);
     this->ui->label_timeline->setText(labelText);
+}
+
+/*
+    Slot 7
+*/
+void MainWindow::customStartAmin(){
+    qDebug() << "Обработчик кнопки запуска/останова анимации: " << state;
+
+    QString stop_continue_hint = "<html> \
+                        <head/> \
+                        <body> \
+                        <p align=\"center\">Перемещайте нижний ползунок</p> \
+                        </body></html>";
+
+    if (this->ui->labelHint->text() != stop_continue_hint){
+            this->ui->labelHint->setText(stop_continue_hint);
+    }
+
+    if (state == 0){
+        state = 1;
+        emit startAnimation();
+        this->ui->pushButton_startDocking->setText(QString("Пауза"));
+    } else {
+        state = 0;
+        emit pauseAmination();
+        this->ui->pushButton_startDocking->setText(QString("Продолжить"));
+    }
 }
 
 // Constructor
@@ -114,6 +153,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->ui->graphicsView->setScene(myScene);
     this->ui->pushButton_startDocking->setEnabled(false);
+    this->ui->hSlider_timeline->setEnabled(false);
 
     /*
     Соединяем сигналы со слотами
@@ -122,13 +162,40 @@ MainWindow::MainWindow(QWidget *parent)
     //bool bOk = QObject::connect(myScene->auv, &AUV::sendCoords, this, &MainWindow::receiveCoords);
     bOk = bOk && QObject::connect(ui->horizontalSlider, &QSlider::valueChanged, this, &MainWindow::receiveViewingAngle);
 
+
+    /*
+    Загружаем файл из главного окна,
+    проверяем корректность данных.
+    Инициируем отрисовку
+    */
     bOk = bOk && QObject::connect(ui->pushButton_loadFile, &QPushButton::clicked, myScene, &MyScene::readFile);
-    bOk = bOk && QObject::connect(ui->pushButton_startDocking, &QPushButton::clicked, myScene, &MyScene::startVisualization);
     bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadSuccessful, this, &MainWindow::setButtonStartAnimationActive);
     bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadFailed, this, &MainWindow::showInformationMessage);
+    bOk = bOk && QObject::connect(ui->pushButton_startDocking, &QPushButton::toggled, this, &MainWindow::customStartAmin);
+
+
+    /*
+    Возможные ситуативные действия во время автоматически запущенной анимации
+    */
     bOk = bOk && QObject::connect(this->myScene , &MyScene::sendCoordsDuringAnimation, this, &MainWindow::receiveCoordsDuringAnimation);
     bOk = bOk && QObject::connect(this->myScene , &MyScene::sendCurrentIterationStep, this, &MainWindow::updateSliderAndLabel);
-    bOk = bOk && QObject::connect(ui->checkBox_showTrajectory, &QCheckBox::clicked, myScene , &MyScene::drawTrajectory);
+    bOk = bOk && QObject::connect(ui->checkBox_showTrajectory, &QCheckBox::clicked, myScene , &MyScene::toggleTrajectory);
+
+    /*
+    Способы остановить анимацию
+    */
+    bOk = bOk && QObject::connect(ui->hSlider_timeline, &QSlider::sliderPressed, myScene, &MyScene::stopAnimTimer);
+    bOk = bOk && QObject::connect(ui->hSlider_timeline, &QSlider::sliderPressed, [this]() {
+        this->state = 0;
+        this->ui->pushButton_startDocking->setChecked(false);
+        this->ui->pushButton_startDocking->setText("Продолжить");
+    });
+    bOk = bOk && QObject::connect(this, &MainWindow::startAnimation, myScene, &MyScene::startAminTimer);
+    bOk = bOk && QObject::connect(this, &MainWindow::pauseAmination, myScene, &MyScene::stopAnimTimer);
+
+    bOk = bOk && QObject::connect(ui->hSlider_timeline, &QSlider::sliderMoved, myScene, &MyScene::sliderMoved);
+    bOk = bOk && QObject::connect(ui->hSlider_timeline, &QSlider::sliderMoved, myScene, &MyScene::stopAnimTimer);
+
     Q_ASSERT(bOk);
 }
 

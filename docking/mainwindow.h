@@ -39,6 +39,7 @@ private:
     QTimer              *timer;
 
     int sceneW, sceneH;
+    int state = 0;
 
 protected:
    //virtual void keyPressEvent(QKeyEvent *event);
@@ -51,6 +52,11 @@ public slots:
     void showInformationMessage(QString);
     void receiveCoordsDuringAnimation(float, float, float);
     void updateSliderAndLabel(int, int);
+
+    void customStartAmin();
+signals:
+    void startAnimation();
+    void pauseAmination();
 };
 #endif // MAINWINDOW_H
 
