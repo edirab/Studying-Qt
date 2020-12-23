@@ -25,6 +25,7 @@ class MainWindow : public QWidget
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void keyPressEvent(QKeyEvent *event) override;
 
     MyScene      *myScene;
 private:

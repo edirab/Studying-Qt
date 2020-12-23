@@ -36,6 +36,37 @@ void MainWindow::resizeEvent(QResizeEvent *event){
 }
 
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    qDebug() << "Обработка стрелочек";
+
+    int key=event->nativeVirtualKey(); //event->key() - целочисленный код клавиши
+    bool useArrows = false;
+
+    if (useArrows){
+        switch (key) {
+            case Qt::Key_Right:
+
+            break;
+
+            case Qt::Key_Left:
+
+            break;
+
+            case Qt::Key_Up:
+
+            break;
+
+            case Qt::Key_Down:
+
+            break;
+
+            default:
+                qDebug() << "Unknown";
+            break;
+        }
+    }
+}
+
 /*
     Slot 1
 */

@@ -204,7 +204,7 @@
      </sizepolicy>
     </property>
     <property name="text">
-     <string>Угол обзора камеры</string>
+     <string>Угол обзора камеры: 50</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

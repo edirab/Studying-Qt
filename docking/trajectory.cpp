@@ -21,9 +21,9 @@ QRectF Trajectory::boundingRect() const {
 */
 void Trajectory::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 
-    int width = scene->width();
-    int height = scene->height();
-    this->update(-width/2, -height/2, width/2, height/2);
+//    int width = scene->width();
+//    int height = scene->height();
+//    this->update(-width/2, -height/2, width/2, height/2);
 
     //qDebug() << "Anim step in Trajectory" << *animIteration_ptr << "\n";
     painter->setPen(Qt::blue);
