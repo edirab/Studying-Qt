@@ -156,7 +156,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string>90</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_auvYaw">
@@ -170,19 +170,6 @@
     </property>
     <property name="text">
      <string>Курс</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox_showTrajectory">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>170</y>
-      <width>151</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Отображать траекторию</string>
     </property>
    </widget>
   </widget>
@@ -245,31 +232,6 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="labelFocalDist">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>70</y>
-      <width>158</width>
-      <height>50</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string>Фокусное расстояние: - мм</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
   </widget>
   <widget class="QLabel" name="labelHint">
    <property name="geometry">
@@ -319,7 +281,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>1/8000</string>
+    <string>-/-</string>
    </property>
   </widget>
  </widget>

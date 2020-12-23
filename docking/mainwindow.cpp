@@ -179,7 +179,7 @@ MainWindow::MainWindow(QWidget *parent)
     */
     bOk = bOk && QObject::connect(this->myScene , &MyScene::sendCoordsDuringAnimation, this, &MainWindow::receiveCoordsDuringAnimation);
     bOk = bOk && QObject::connect(this->myScene , &MyScene::sendCurrentIterationStep, this, &MainWindow::updateSliderAndLabel);
-    bOk = bOk && QObject::connect(ui->checkBox_showTrajectory, &QCheckBox::clicked, myScene , &MyScene::toggleTrajectory);
+    //bOk = bOk && QObject::connect(ui->checkBox_showTrajectory, &QCheckBox::clicked, myScene , &MyScene::toggleTrajectory);
 
     /*
     Способы остановить анимацию
