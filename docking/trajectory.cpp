@@ -13,13 +13,17 @@ QRectF Trajectory::boundingRect() const {
     int width = scene->width();
     int height = scene->height();
 
-    return QRectF(0, 0, width, height);
+    return QRectF(-width/2, -height/2, width/2, height/2);
 }
 
 /*
 Сделано неоптимально, программа тормизит
 */
 void Trajectory::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
+
+    int width = scene->width();
+    int height = scene->height();
+    this->update(-width/2, -height/2, width/2, height/2);
 
     //qDebug() << "Anim step in Trajectory" << *animIteration_ptr << "\n";
     painter->setPen(Qt::blue);
