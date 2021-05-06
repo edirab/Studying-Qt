@@ -65,7 +65,7 @@ public slots:
 
 private:
 
-    int timer_period{100};
+    int timer_period{10};
 
     ModelParams modelParams;
 

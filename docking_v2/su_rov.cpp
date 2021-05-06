@@ -126,7 +126,7 @@ void SU_ROV::calc_desired_yaw(){
     }
     // 4
     else if (delta_x < 0 && delta_z >= 0) {
-        this->desired_yaw = 180 - qRadiansToDegrees(atan(delta_z / abs(delta_z)));
+        this->desired_yaw = 180 - qRadiansToDegrees(atan(delta_z / abs(delta_x)));
     }
 
     if (dir == -1) {
