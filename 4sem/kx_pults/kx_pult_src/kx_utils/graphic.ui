@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Graphic</class>
+ <widget class="QFrame" name="Graphic">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>564</width>
+    <height>433</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>150</width>
+    <height>150</height>
+   </size>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <item row="0" column="0" rowspan="2">
+    <widget class="QWidget" name="widgetLeft" native="true">
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>-10</x>
+        <y>0</y>
+        <width>28</width>
+        <height>361</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="layoutButtons">
+       <property name="spacing">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QToolButton" name="buttonAutofit">
+         <property name="toolTip">
+          <string>Autofit</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/zoom-fit-best.png</normaloff>:/icons/zoom-fit-best.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="checkGrid">
+         <property name="toolTip">
+          <string>Grid</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/view-grid.png</normaloff>:/icons/view-grid.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="checkGuides">
+         <property name="toolTip">
+          <string>Cursor axis</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/edit-guides.png</normaloff>:/icons/edit-guides.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="checkExpandY">
+         <property name="toolTip">
+          <string>Only expand Y</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/expand_s_y.png</normaloff>:/icons/expand_s_y.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="checkExpandX">
+         <property name="toolTip">
+          <string>Only expand X</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/expand_s_x.png</normaloff>:/icons/expand_s_x.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonFullscreen">
+         <property name="toolTip">
+          <string>Fullscreen</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/view-fullscreen.png</normaloff>:/icons/view-fullscreen.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="checkBorderInputs">
+         <property name="toolTip">
+          <string>Border inputs</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/border-line.png</normaloff>:/icons/border-line.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="checkLegend">
+         <property name="toolTip">
+          <string>Legend</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/legend.png</normaloff>:/icons/legend.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="checkPause">
+         <property name="toolTip">
+          <string>Pause</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/media-playback-pause.png</normaloff>:/icons/media-playback-pause.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonConfigure">
+         <property name="toolTip">
+          <string>Configure ...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/configure.png</normaloff>:/icons/configure.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonSave">
+         <property name="toolTip">
+          <string>Save image ...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/document-save.png</normaloff>:/icons/document-save.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Preferred</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonClear">
+         <property name="toolTip">
+          <string>Clear</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/edit-clear.png</normaloff>:/icons/edit-clear.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonClose">
+         <property name="toolTip">
+          <string>Close</string>
+         </property>
+         <property name="icon">
+          <iconset resource="qad_graphic.qrc">
+           <normaloff>:/icons/dialog-close.png</normaloff>:/icons/dialog-close.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>79</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="labelCaption">
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2" rowspan="2">
+    <widget class="QWidget" name="widgetRight" native="true"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="margin">
+       <number>0</number>
+      </property>
+      <item row="2" column="1" colspan="2">
+       <widget class="QWidget" name="widgetLX" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="margin">
+          <number>2</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="1" rowspan="2" colspan="2">
+       <layout class="QVBoxLayout" name="layoutCanvas">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="UGLWidget" name="canvas_gl" native="true">
+          <property name="mouseTracking">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="UWidget" name="canvas_raster" native="true">
+          <property name="mouseTracking">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0" rowspan="2">
+       <widget class="QWidget" name="widgetLY" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="margin">
+          <number>2</number>
+         </property>
+         <item>
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLabel" name="status">
+     <property name="text">
+      <string>Cursor: ( ; )</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QWidget" name="widgetLegend" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <layout class="QGridLayout" name="layoutLegend">
+      <property name="horizontalSpacing">
+       <number>4</number>
+      </property>
+      <property name="margin">
+       <number>1</number>
+      </property>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>UWidget</class>
+   <extends>QWidget</extends>
+   <header>uwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>UGLWidget</class>
+   <extends>QWidget</extends>
+   <header>uglwidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="qad_graphic.qrc"/>
+ </resources>
+ <connections/>
+</ui>

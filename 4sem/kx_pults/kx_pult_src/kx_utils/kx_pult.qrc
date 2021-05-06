@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/dialog-close.png</file>
+        <file>icons/edit-clear-.png</file>
+        <file>icons/edit-guides.png</file>
+        <file>icons/view-grid.png</file>
+        <file>icons/zoom-fit-best.png</file>
+        <file>icons/configure.png</file>
+        <file>icons/alpha.png</file>
+        <file>icons/document-save.png</file>
+        <file>icons/edit-clear-locationbar-rtl.png</file>
+        <file>icons/edit-find.png</file>
+        <file>icons/list-add.png</file>
+        <file>icons/edit-delete.png</file>
+        <file>icons/item-add.png</file>
+        <file>icons/item.png</file>
+        <file>icons/node-add.png</file>
+        <file>icons/node.png</file>
+        <file>icons/edit-copy.png</file>
+        <file>icons/edit-paste.png</file>
+        <file>icons/expand_s_x.png</file>
+        <file>icons/expand_s_y.png</file>
+        <file>icons/expand_x.png</file>
+        <file>icons/expand_y.png</file>
+        <file>icons/media-playback-pause.png</file>
+        <file>icons/media-playback-stop.png</file>
+        <file>icons/media-record.png</file>
+        <file>icons/application-exit.png</file>
+        <file>icons/document-save-.png</file>
+        <file>icons/view-refresh.png</file>
+        <file>icons/document-open.png</file>
+        <file>icons/archive-extract.png</file>
+        <file>icons/document-export.png</file>
+        <file>icons/document-import.png</file>
+        <file>icons/zoom-fit-height.png</file>
+        <file>icons/layer-visible-off.png</file>
+        <file>icons/layer-visible-on.png</file>
+        <file>icons/accessories-calculator.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QPIConfigNewDialog</class>
+ <widget class="QDialog" name="QPIConfigNewDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>316</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>300</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupType">
+     <property name="title">
+      <string>Type</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="radioType_0">
+        <property name="text">
+         <string>string</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="type" stdset="0">
+         <string>s</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="radioType_1">
+        <property name="text">
+         <string>integer</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>n</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QRadioButton" name="radioType_2">
+        <property name="text">
+         <string>float</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>f</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QRadioButton" name="radioType_3">
+        <property name="text">
+         <string>string list</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>l</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QRadioButton" name="radioType_4">
+        <property name="text">
+         <string>boolean</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>b</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QRadioButton" name="radioType_5">
+        <property name="text">
+         <string>color</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>c</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QRadioButton" name="radioType_6">
+        <property name="text">
+         <string>rectangle</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>r</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QRadioButton" name="radioType_7">
+        <property name="text">
+         <string>area</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>a</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QRadioButton" name="radioType_8">
+        <property name="text">
+         <string>point</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>p</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QRadioButton" name="radioType_9">
+        <property name="text">
+         <string>vector</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>v</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QRadioButton" name="radioType_10">
+        <property name="text">
+         <string>ip</string>
+        </property>
+        <property name="type" stdset="0">
+         <string>i</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Name:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lineName"/>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>1</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="labelComment">
+     <property name="text">
+      <string>Comment:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelValue">
+     <property name="text">
+      <string>Value:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="lineComment"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="ConfigValueWidget" name="widgetValue" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ConfigValueWidget</class>
+   <extends>QWidget</extends>
+   <header>qpiconfigvaluewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>lineName</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>326</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>231</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>169</x>
+     <y>326</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>232</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_0</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>33</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>61</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_1</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>25</x>
+     <y>88</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>99</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_2</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>17</x>
+     <y>119</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_3</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>26</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_4</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>50</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>195</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_5</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>312</x>
+     <y>10</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_6</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>275</x>
+     <y>67</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>315</x>
+     <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_7</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>262</x>
+     <y>95</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>311</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_8</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>250</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>313</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_9</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>286</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>311</x>
+     <y>138</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioType_10</sender>
+   <signal>clicked()</signal>
+   <receiver>QPIConfigNewDialog</receiver>
+   <slot>typeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>273</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>312</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>typeChanged()</slot>
+ </slots>
+</ui>
