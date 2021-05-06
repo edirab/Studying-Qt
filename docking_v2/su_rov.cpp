@@ -11,7 +11,7 @@ SU_ROV::SU_ROV(QObject *parent) : QObject(parent)
     dPsi =0;
     Upsi =0;
     connect(&timer, SIGNAL(timeout()), SLOT(tick()));
-    timer.start(10);
+    timer.start(this->timer_period);
 
 }
 
@@ -21,8 +21,6 @@ void SU_ROV::polar_to_cartesian(double &x, double &y, float r, float theta){
     y = r * sin(theta);
     return;
 }
-
-
 
 void SU_ROV::plot_trajectory()
 {
@@ -76,22 +74,127 @@ void SU_ROV::plot_trajectory()
     }
 
     for (int i = 0; i < x_outer.size(); i++){
-        this->x_final.push_back((x_outer[i]));
-        this->x_final.push_back((x_inner[i]));
+        this->z_final.push_back((x_outer[i]));
+        this->z_final.push_back((x_inner[i]));
         this->direction.push_back("forward");
 
-        this->y_final.push_back(y_outer[i]);
-        this->y_final.push_back(y_inner[i]);
+        this->x_final.push_back(y_outer[i]);
+        this->x_final.push_back(y_inner[i]);
         this->direction.push_back("backward");
     }
+}
+
+void SU_ROV::calc_desired_yaw(){
+
+    double delta_x = this->X1 - this->X_current;
+    double delta_z = this->Z1 - this->Z_current;
+
+    // 1
+    if (delta_x >= 0 && delta_z >= 0){
+        this->desired_yaw = qRadiansToDegrees(atan(delta_z / delta_x));
+    }
+    // 2
+    else if (delta_x >= 0 && delta_z < 0){
+        this->desired_yaw = 360 - qRadiansToDegrees(atan(abs(delta_z) /  delta_x));
+
+    }
+    // 3
+    else if (delta_x < 0 && delta_z >= 0){
+        this->desired_yaw = 180 + qRadiansToDegrees(atan(abs(delta_z) - abs(delta_x)));
+    }
+    // 4
+    else if (delta_x < 0 && delta_z >= 0) {
+        this->desired_yaw = 180 - qRadiansToDegrees(atan(delta_z / abs(delta_z)));
+    }
+
+    if (dir == -1) {
+        this->desired_yaw = this->desired_yaw - 180;
+    }
+}
+
+void SU_ROV::check_distance(){
+    double dst = sqrt( pow(Z_current - Z1, 2) + pow(X_current - X1, 2) );
+
+    if (dst < modelParams.Rmin){
+        this->dot_number++;
+    }
+}
+
+void SU_ROV::check_end_simulation(){
+    if (Z1 > 13 && Z_current > 12.5){
+        this->timer.stop();
+    }
+}
+
+void SU_ROV::constrain_yaw(){
+
+    if (abs(desired_yaw - real_yaw) > 180){
+
+        if (desired_yaw > 180){
+            deflection_yaw_constrained = desired_yaw - 360;
+        } else {
+            deflection_yaw_constrained = desired_yaw;
+        }
+    }
+    else {
+        deflection_yaw_constrained = desired_yaw;
+    }
+
+}
+
+void SU_ROV::calc_position(){
+
+    double L = V_fwd * timer_period;
+
+    double shortTravel_Z = L * sin(qDegreesToRadians(real_yaw));
+    double shortTravel_X = L * cos(qDegreesToRadians(real_yaw));
+
+    this->Z_current += shortTravel_Z;
+    this->X_current += shortTravel_X;
+    return;
 }
 
 
 void SU_ROV::tick()
 {
+    // Получаем данные
     dPsi = udp.getData().dPsi;
     psiCurrent = udp.getData().Psi;
+
+    // Вычисляем
+    calc_position();
+    check_distance();
+
+    assert(dot_number < x_final.size());
+
+    this->X1 = x_final[dot_number];
+    this->Z1 = z_final[dot_number];
+
+    check_end_simulation();
+    calc_desired_yaw();
+    constrain_yaw();
+
+    // остатки древней цивилизации
     Upsi = (psiDesired - psiCurrent)*K1 - K2*dPsi;
+
+
     //Upsi = 10;
     udp.send(Upsi);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

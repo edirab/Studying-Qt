@@ -65,10 +65,12 @@ public slots:
 
 private:
 
+    int timer_period{10};
+
     ModelParams modelParams;
 
+    QVector<double> z_final;
     QVector<double> x_final;
-    QVector<double> y_final;
     QVector<QString> direction;
 
     QTimer timer;
@@ -76,7 +78,13 @@ private:
 
     void polar_to_cartesian(double &x, double &y, float r, float theta);
     void plot_trajectory();
-    void stop_simulation();
+
+    void check_end_simulation();
+    void calc_desired_yaw();
+    void constrain_yaw();
+    void check_distance();
+
+    void calc_position();
 
     //заданный, текущий курс и угловая скорость по курсу
     double psiDesired,psiCurrent,dPsi;
@@ -85,8 +93,24 @@ private:
     //управляющий сигнал
     double Upsi;
 
+    // ********* Отправляем **********************
+    int dot_number;
+
+    double Z1;
+    double X1;
+    double dir;
+
+
+    // ********* Рассчитывем в коде ***************
     double X_current;
     double Z_current;
+
+    double desired_yaw;
+    double deflection_yaw_constrained;
+
+    // ********* Получаем *************************
+    double V_fwd; // получаем по UDP
+    double real_yaw;
 };
 
 #endif // SU_ROV_H
