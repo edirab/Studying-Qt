@@ -4,18 +4,20 @@
 
 struct ToMatlab{
 
-    ToMatlab():Upsi(0){}
-    double Upsi;
+    ToMatlab():desired_yaw(0){}
+    //double Upsi;
+    double desired_yaw;
+    double dir;
 };
 
 
 struct FromMatlab{
     FromMatlab(){
-        Psi = 0;
-        dPsi = 0;
+        real_yaw = 0;
+        real_V = 0;
     }
-    double Psi;
-    double dPsi;
+    double real_yaw;
+    double real_V;
 };
 
 
@@ -32,13 +34,13 @@ private:
     QUdpSocket *m_receiveSocket;
 public slots:
 
-    void send(double U);
+    void send(double desired_yaw, double dir);
 
     void readData(){
         while(m_receiveSocket->hasPendingDatagrams()){
             m_receiveSocket->readDatagram((char*)&receivedData, sizeof(receivedData));
-            qDebug() <<"received X: " << receivedData.Psi;
-            qDebug() << "received Y: "<< receivedData.dPsi;
+            qDebug() <<"received X: " << receivedData.real_yaw;
+            qDebug() << "received Y: "<< receivedData.real_V;
         }
     }
 public:

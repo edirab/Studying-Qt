@@ -71,7 +71,7 @@ private:
 
     QVector<double> z_final;
     QVector<double> x_final;
-    QVector<QString> direction;
+    //QVector<QString> direction;
 
     QTimer timer;
     UdpSender udp;
@@ -79,6 +79,7 @@ private:
     void polar_to_cartesian(double &x, double &y, float r, float theta);
     void plot_trajectory();
 
+    void calc_dir();
     void check_end_simulation();
     void calc_desired_yaw();
     void constrain_yaw();
@@ -94,11 +95,11 @@ private:
     double Upsi;
 
     // ********* Отправляем **********************
-    int dot_number;
+    int dot_number{0};
 
-    double Z1;
-    double X1;
-    double dir;
+    double Z1{0};
+    double X1{15}; // На 2 м выше самой первой точки
+    double dir{1};
 
 
     // ********* Рассчитывем в коде ***************
@@ -109,8 +110,8 @@ private:
     double deflection_yaw_constrained;
 
     // ********* Получаем *************************
-    double V_fwd; // получаем по UDP
-    double real_yaw;
+    double V_fwd{0.7}; // получаем по UDP
+    double real_yaw{180};
 };
 
 #endif // SU_ROV_H

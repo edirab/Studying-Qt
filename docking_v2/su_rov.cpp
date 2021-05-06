@@ -76,11 +76,28 @@ void SU_ROV::plot_trajectory()
     for (int i = 0; i < x_outer.size(); i++){
         this->z_final.push_back((x_outer[i]));
         this->z_final.push_back((x_inner[i]));
-        this->direction.push_back("forward");
+        //this->direction.push_back("forward");
 
         this->x_final.push_back(y_outer[i]);
         this->x_final.push_back(y_inner[i]);
-        this->direction.push_back("backward");
+        //this->direction.push_back("backward");
+    }
+}
+
+void SU_ROV::calc_dir(){
+    if (dot_number % 2 == 1){
+        this->dir = 1; // fwd
+    }else{
+        this->dir = -1; // backward
+    }
+
+    /*
+        NB: по началу нужно двигаться 2 раза вперёд:
+        от (0, 15) к (0, 13) и
+        далее к первой путевой точке
+    */
+    if (dot_number == 0){
+        this->dir = 1;
     }
 }
 
@@ -121,7 +138,7 @@ void SU_ROV::check_distance(){
 }
 
 void SU_ROV::check_end_simulation(){
-    if (Z1 > 13 && Z_current > 12.5){
+    if (Z1 >= 13 && Z_current >= 12.5){
         this->timer.stop();
     }
 }
@@ -158,8 +175,10 @@ void SU_ROV::calc_position(){
 void SU_ROV::tick()
 {
     // Получаем данные
-    dPsi = udp.getData().dPsi;
-    psiCurrent = udp.getData().Psi;
+    //dPsi = udp.getData().dPsi;
+    //psiCurrent = udp.getData().Psi;
+    this->real_yaw = udp.getData().real_yaw;
+    this->V_fwd = udp.getData().real_V;
 
     // Вычисляем
     calc_position();
@@ -170,6 +189,7 @@ void SU_ROV::tick()
     this->X1 = x_final[dot_number];
     this->Z1 = z_final[dot_number];
 
+    calc_dir();
     check_end_simulation();
     calc_desired_yaw();
     constrain_yaw();
@@ -179,7 +199,7 @@ void SU_ROV::tick()
 
 
     //Upsi = 10;
-    udp.send(Upsi);
+    udp.send(this->desired_yaw, this->dir);
 }
 
 
