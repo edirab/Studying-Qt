@@ -4,10 +4,13 @@
 
 struct ToMatlab{
 
-    ToMatlab():desired_yaw(0){}
+    ToMatlab():desired_yaw(0), dir(1), curr_X(0), curr_Z(0) {}
     //double Upsi;
     double desired_yaw;
     double dir;
+
+    double curr_X;
+    double curr_Z;
 };
 
 
@@ -34,7 +37,7 @@ private:
     QUdpSocket *m_receiveSocket;
 public slots:
 
-    void send(double desired_yaw, double dir);
+    void send(double desired_yaw, double dir, double curr_X, double curr_Z);
 
     void readData(){
         while(m_receiveSocket->hasPendingDatagrams()){

@@ -2,11 +2,11 @@
 
 SU_ROV::SU_ROV(QObject *parent) : QObject(parent)
 {
-    //plot_trajectory();
+    plot_trajectory();
 
     // for test_1: (0, 15) -> (0, 12.5) с учётом радиуса входа в точку
-    z_final.push_back(0);
-    x_final.push_back(12);
+//    z_final.push_back(0);
+//    x_final.push_back(12);
 
     psiDesired = 10;
     psiCurrent =0;
@@ -14,6 +14,7 @@ SU_ROV::SU_ROV(QObject *parent) : QObject(parent)
     K2=1;
     dPsi =0;
     Upsi =0;
+
     connect(&timer, SIGNAL(timeout()), SLOT(tick()));
     timer.start(this->timer_period);
 
@@ -120,7 +121,7 @@ void SU_ROV::calc_desired_yaw(){
 
     }
     // 3
-    else if (delta_x < 0 && delta_z >= 0){
+    else if (delta_x < 0 && delta_z < 0){
         this->desired_yaw = 180 + qRadiansToDegrees(atan(abs(delta_z)/ abs(delta_x)));
     }
     // 4
@@ -144,10 +145,10 @@ void SU_ROV::check_distance(){
 void SU_ROV::check_end_simulation(){
 
     // Debug: test_1
-    if (X1 >= 13 && Z_current >= 12.5){
-        dir = 0;
-        this->timer.stop();
-    }
+//    if (X1 >= 13 && Z_current >= 12.5){
+//        dir = 0;
+//        this->timer.stop();
+//    }
 
     if (Z1 >= 13 && Z_current >= 12.5){
         this->timer.stop();
@@ -195,24 +196,26 @@ void SU_ROV::tick()
     calc_position();
     check_distance();
 
-    //assert(dot_number < x_final.size());
+    assert(dot_number < x_final.size());
 
-    //this->X1 = x_final[dot_number];
-    //this->Z1 = z_final[dot_number];
+    this->X1 = x_final[dot_number];
+    this->Z1 = z_final[dot_number];
 
     // debug: test_1
-    this->X1 = x_final[0];
-    this->Z1 = z_final[0];
+//    this->X1 = x_final[0];
+//    this->Z1 = z_final[0];
 
     calc_dir();
     check_end_simulation();
     calc_desired_yaw();
     constrain_yaw();
 
-    qDebug() << "Z_current: " << Z_current
-             << " X_current: " << X_current
+    qDebug() << "Z_curr: " << Z_current
+             << "X_curr: " << X_current
+             << "Z_fin: " << z_final[dot_number]
+             << "X_fin: " << x_final[dot_number]
              << "Des. yaw: " << desired_yaw
-             << " Constrained: " << deflection_yaw_constrained
+             << "Constr.: " << deflection_yaw_constrained
              << "Real yaw: " << real_yaw
              << "Real Vfwd: " << V_fwd <<  "\n";
 
@@ -221,7 +224,7 @@ void SU_ROV::tick()
 
 
     //Upsi = 10;
-    udp.send(this->deflection_yaw_constrained, this->dir);
+    udp.send(this->deflection_yaw_constrained, this->dir, this->X_current, this->Z_current);
 }
 
 

@@ -16,9 +16,12 @@ UdpSender::UdpSender(QObject *prt):QObject(prt)
 }
 
 
-void UdpSender::send(double desired_yaw, double dir){
+void UdpSender::send(double desired_yaw, double dir, double X_curr, double Z_curr){
     sendData.desired_yaw = desired_yaw;
     sendData.dir = dir;
+    sendData.curr_X = X_curr;
+    sendData.curr_Z = Z_curr;
+
     qDebug()<<m_socket->writeDatagram((char*)&sendData, sizeof(sendData), QHostAddress::LocalHost, 13042);
 }
 
