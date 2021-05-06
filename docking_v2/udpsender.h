@@ -39,8 +39,8 @@ public slots:
     void readData(){
         while(m_receiveSocket->hasPendingDatagrams()){
             m_receiveSocket->readDatagram((char*)&receivedData, sizeof(receivedData));
-            qDebug() <<"received X: " << receivedData.real_yaw;
-            qDebug() << "received Y: "<< receivedData.real_V;
+            //qDebug() <<"received X: " << receivedData.real_yaw;
+            //qDebug() << "received Y: "<< receivedData.real_V;
         }
     }
 public:

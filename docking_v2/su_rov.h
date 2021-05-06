@@ -101,7 +101,7 @@ private:
 
     double X1{13}; // На 2 м выше самой первой точки
     double Z1{0};
-    double dir{1};
+    double dir{1}; // 1 - fwd, -1 - backward, 0 - stop sim
 
 
     // ********* Рассчитывем в коде ***************

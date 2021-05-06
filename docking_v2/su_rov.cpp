@@ -4,9 +4,9 @@ SU_ROV::SU_ROV(QObject *parent) : QObject(parent)
 {
     //plot_trajectory();
 
-    // for test_1: (0, 15) -> (0, 13)
+    // for test_1: (0, 15) -> (0, 12.5) с учётом радиуса входа в точку
     z_final.push_back(0);
-    x_final.push_back(13);
+    x_final.push_back(12);
 
     psiDesired = 10;
     psiCurrent =0;
@@ -121,7 +121,7 @@ void SU_ROV::calc_desired_yaw(){
     }
     // 3
     else if (delta_x < 0 && delta_z >= 0){
-        this->desired_yaw = 180 + qRadiansToDegrees(atan(abs(delta_z) - abs(delta_x)));
+        this->desired_yaw = 180 + qRadiansToDegrees(atan(abs(delta_z)/ abs(delta_x)));
     }
     // 4
     else if (delta_x < 0 && delta_z >= 0) {
@@ -142,6 +142,13 @@ void SU_ROV::check_distance(){
 }
 
 void SU_ROV::check_end_simulation(){
+
+    // Debug: test_1
+    if (X1 >= 13 && Z_current >= 12.5){
+        dir = 0;
+        this->timer.stop();
+    }
+
     if (Z1 >= 13 && Z_current >= 12.5){
         this->timer.stop();
     }
@@ -172,8 +179,6 @@ void SU_ROV::calc_position(){
 
     this->Z_current += shortTravel_Z;
     this->X_current += shortTravel_X;
-
-    qDebug() << "Z_current: " << Z_current << " X_current: " << X_current << "\n";
     return;
 }
 
@@ -190,22 +195,33 @@ void SU_ROV::tick()
     calc_position();
     check_distance();
 
-    assert(dot_number < x_final.size());
+    //assert(dot_number < x_final.size());
 
-    this->X1 = x_final[dot_number];
-    this->Z1 = z_final[dot_number];
+    //this->X1 = x_final[dot_number];
+    //this->Z1 = z_final[dot_number];
+
+    // debug: test_1
+    this->X1 = x_final[0];
+    this->Z1 = z_final[0];
 
     calc_dir();
     check_end_simulation();
     calc_desired_yaw();
     constrain_yaw();
 
+    qDebug() << "Z_current: " << Z_current
+             << " X_current: " << X_current
+             << "Des. yaw: " << desired_yaw
+             << " Constrained: " << deflection_yaw_constrained
+             << "Real yaw: " << real_yaw
+             << "Real Vfwd: " << V_fwd <<  "\n";
+
     // остатки древней цивилизации
-    Upsi = (psiDesired - psiCurrent)*K1 - K2*dPsi;
+    //Upsi = (psiDesired - psiCurrent)*K1 - K2*dPsi;
 
 
     //Upsi = 10;
-    udp.send(this->desired_yaw, this->dir);
+    udp.send(this->deflection_yaw_constrained, this->dir);
 }
 
 
