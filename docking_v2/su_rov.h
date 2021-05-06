@@ -65,7 +65,7 @@ public slots:
 
 private:
 
-    int timer_period{10};
+    int timer_period{100};
 
     ModelParams modelParams;
 
@@ -87,6 +87,8 @@ private:
 
     void calc_position();
 
+    bool received_packet;
+
     //заданный, текущий курс и угловая скорость по курсу
     double psiDesired,psiCurrent,dPsi;
     //коэффициенты K1,K2
@@ -97,17 +99,17 @@ private:
     // ********* Отправляем **********************
     int dot_number{0};
 
+    double X1{13}; // На 2 м выше самой первой точки
     double Z1{0};
-    double X1{15}; // На 2 м выше самой первой точки
     double dir{1};
 
 
     // ********* Рассчитывем в коде ***************
-    double X_current;
-    double Z_current;
+    double X_current{15};
+    double Z_current{0};
 
-    double desired_yaw;
-    double deflection_yaw_constrained;
+    double desired_yaw{180};
+    double deflection_yaw_constrained{180};
 
     // ********* Получаем *************************
     double V_fwd{0.7}; // получаем по UDP

@@ -2,7 +2,11 @@
 
 SU_ROV::SU_ROV(QObject *parent) : QObject(parent)
 {
-    plot_trajectory();
+    //plot_trajectory();
+
+    // for test_1: (0, 15) -> (0, 13)
+    z_final.push_back(0);
+    x_final.push_back(13);
 
     psiDesired = 10;
     psiCurrent =0;
@@ -161,13 +165,15 @@ void SU_ROV::constrain_yaw(){
 
 void SU_ROV::calc_position(){
 
-    double L = V_fwd * timer_period;
+    double L = V_fwd * timer_period / 1000 ; // ms
 
     double shortTravel_Z = L * sin(qDegreesToRadians(real_yaw));
     double shortTravel_X = L * cos(qDegreesToRadians(real_yaw));
 
     this->Z_current += shortTravel_Z;
     this->X_current += shortTravel_X;
+
+    qDebug() << "Z_current: " << Z_current << " X_current: " << X_current << "\n";
     return;
 }
 
