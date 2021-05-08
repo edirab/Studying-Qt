@@ -77,7 +77,7 @@ private:
     UdpSender udp;
 
     void polar_to_cartesian(double &x, double &y, float r, float theta);
-    void plot_trajectory();
+    void generate_path_points();
 
     void calc_dir();
     void check_end_simulation();

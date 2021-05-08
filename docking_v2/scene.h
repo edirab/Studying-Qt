@@ -37,7 +37,7 @@ public:
     int animIteration = 0;
 
 private:
-    int animationStep = 5; // ms
+    int animationStep = 33; // ms
 
 public slots:
 

@@ -233,7 +233,7 @@
     <set>Qt::ImhMultiLine</set>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Выберите файл, содержащий&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;записи с временными метками и&lt;/p&gt;&lt;p align=&quot;center&quot;&gt; кооридндатами в определённом&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;формате&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Нажмите &amp;quot;Начать обход&amp;quot;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;для запуска отображения&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="textFormat">
     <enum>Qt::RichText</enum>

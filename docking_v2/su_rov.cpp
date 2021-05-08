@@ -2,11 +2,7 @@
 
 SU_ROV::SU_ROV(QObject *parent) : QObject(parent)
 {
-    plot_trajectory();
-
-    // for test_1: (0, 15) -> (0, 12.5) с учётом радиуса входа в точку
-//    z_final.push_back(0);
-//    x_final.push_back(12);
+    generate_path_points();
 
     connect(&timer, SIGNAL(timeout()), SLOT(tick()));
 }
@@ -18,7 +14,7 @@ void SU_ROV::polar_to_cartesian(double &x, double &y, float r, float theta){
     return;
 }
 
-void SU_ROV::plot_trajectory()
+void SU_ROV::generate_path_points()
 {
 
     QVector<double> x_outer;

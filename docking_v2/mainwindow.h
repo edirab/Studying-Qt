@@ -49,7 +49,7 @@ protected:
 public slots:
     void receiveCoords(int x, int y, int yaw);
     void receiveViewingAngle(int angle);
-    void setButtonStartAnimationActive();
+
     void showInformationMessage(QString);
     void receiveCoordsDuringAnimation(float, float, float);
 

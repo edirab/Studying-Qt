@@ -57,7 +57,7 @@ void msleep(int ms)
 void MyScene::AnimationStep(){
 
 
-    //qDebug() << "Animation step:" << animIteration << "\n";
+    qDebug() << "Animation step:" << animIteration << "\n";
 
     if (this->trajectory->data.size() > 0){
         // Time, X (up), Z(right), Yaw (Counter Clockwise)
@@ -77,9 +77,6 @@ void MyScene::AnimationStep(){
         emit sendCurrentIterationStep(animIteration, 8000);
         //this->update(0, 0, this->width(), this->height());
         animIteration++;
-    }
-    else {
-        animTimer->stop();
     }
 }
 

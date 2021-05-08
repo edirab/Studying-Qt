@@ -52,24 +52,6 @@ void MainWindow::receiveViewingAngle(int angle){
     this->myScene->update(0, 0, width(), height()); // вызвать перерисовку сцены
 }
 
-/*
-    Slot 3
-*/
-void MainWindow::setButtonStartAnimationActive(){
-    qDebug() << "Activate Start Anim Push Button \n";
-    this->ui->pushButton_startDocking->setEnabled(true);
-    //this->ui->hSlider_timeline->setEnabled(true);
-
-    QString start_hint = "<html> \
-                        <head/> \
-                        <body> \
-                        <p align=\"center\">Нажмите \"Начать обход\"</p> \
-                        <p align=\"center\">для запуска отображения</p> \
-                        </body></html>";
-
-    this->ui->labelHint->setText(start_hint);
-}
-
 
 /*
     Slot 4
@@ -86,9 +68,9 @@ void MainWindow::showInformationMessage(QString error_msg){
     Slot 5
 */
 void MainWindow::receiveCoordsDuringAnimation(float X_, float Z_, float Yaw){
-    this->ui->lineEdit_X->setText(QString::number(X_));
-    this->ui->lineEdit_Y->setText(QString::number(Z_));
-    this->ui->lineEdit_Yaw->setText(QString::number(Yaw));
+    this->ui->lineEdit_X->setText(QString::number(X_, 'f', 1));
+    this->ui->lineEdit_Y->setText(QString::number(Z_, 'f', 1));
+    this->ui->lineEdit_Yaw->setText(QString::number(Yaw, 'f', 2));
 }
 
 
@@ -101,7 +83,7 @@ void MainWindow::customStartAmin(){
     QString stop_continue_hint = "<html> \
                         <head/> \
                         <body> \
-                        <p align=\"center\">Перемещайте нижний ползунок</p> \
+                        <p align=\"center\"></p> \
                         </body></html>";
 
     if (this->ui->labelHint->text() != stop_continue_hint){
