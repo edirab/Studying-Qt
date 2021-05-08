@@ -43,63 +43,6 @@ void MyScene::keyPressEvent(QKeyEvent *event) {
 }
 
 
-/*
-    Slot 1
-*/
-void MyScene::readFile(){
-    qDebug() << "In Read file \n";
-
-    data.clear();
-    bool dataIsCoorect = true;
-
-    QString file_path = QFileDialog::getOpenFileName(0, "Выберите файл с данными", "../docking/", "*.dat *.txt");
-    QFile file(file_path);
-
-    if(!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "error " << file.errorString() << "\n";
-    }
-
-    int line_number = 1;
-    QTextStream in(&file);
-
-    while(!in.atEnd()) {
-        QVector<float> one_line(4);
-
-        QString line = in.readLine();
-        QStringList fields = line.split(" ");
-        //qDebug() << fields << "\n";
-
-        if (fields.length() == 4) {
-            one_line[0] = fields.at(0).toDouble();
-            one_line[1] = fields.at(1).toDouble();
-            one_line[2] = fields.at(2).toDouble();
-            one_line[3] = fields.at(3).toDouble();
-            line_number++;
-        } else {
-            dataIsCoorect = false;
-                QString error_msg = "";
-                error_msg += "<p> В файле <b>" + file_path + "</b> обнаружена ошибка на строке </p>";
-                error_msg += "<p>" + QString::number(line_number) + ": " + QString(line) + "</p>";
-                error_msg +="<p> Ожидается 4 числовых параметра вместо " + QString::number(fields.length()) + ".</p>";
-                error_msg += "<p>Проверьте целостность файла и повторите попытку.</p>";
-                qDebug() << error_msg;
-            emit fileReadFailed(error_msg);
-            break;
-        }
-        //qDebug() << a << "\n";
-        this->data.append(one_line);
-        this->trajectory->data.append(one_line);
-    }
-
-    file.close();
-    for (int i = 0; i < data.length(); i++){
-        //qDebug() << "Data: " << this->data[i];
-    }
-
-    if (dataIsCoorect){
-        emit fileReadSuccessful();
-    }
-}
 
 void msleep(int ms)
 {
@@ -117,9 +60,9 @@ void MyScene::AnimationStep(){
 
     if (animIteration < 8000){
         // Time, X (up), Z(right), Yaw (Counter Clockwise)
-        float X_ = data[animIteration][1] ;
-        float Z_ = data[animIteration][2] ;
-        float Yaw = data[animIteration][3];
+        float X_ = 0;// data[animIteration][1] ;
+        float Z_ = 0; // data[animIteration][2] ;
+        float Yaw = 180; // data[animIteration][3];
 
         int x_projection = int(Z_ * 0.5 * SCALE_FACTOR);
         int y_projection = - int(X_ * 0.5 * SCALE_FACTOR) ;
@@ -146,17 +89,8 @@ void MyScene::AnimationStep(){
 void MyScene::startAminTimer(){
 
     animTimer->start();
+    this->auv->su.timer.start(this->auv->su.timer_period);
     qDebug() << "Запуск таймера \n";
-}
-
-
-
-/*
-    Slot 4
-*/
-void MyScene::toggleTrajectory(){
-
-    qDebug() << "Здесь отобразим траекторию";
 }
 
 
@@ -167,17 +101,8 @@ void MyScene::toggleTrajectory(){
 void MyScene::stopAnimTimer(){
 
     animTimer->stop();
+    this->auv->su.timer.stop();
     qDebug() << "Останов таймера \n";
-}
-
-/*
-    Slot 6
-*/
-void MyScene::sliderMoved(int pos){
-    qDebug() << "Slider pos: " << pos;
-    this->animIteration = pos;
-    emit AnimationStep();
-    this->update(0, 0, width(), height());
 }
 
 

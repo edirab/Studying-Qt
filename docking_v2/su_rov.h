@@ -57,6 +57,8 @@ class SU_ROV : public QObject
     Q_OBJECT
 public:
     explicit SU_ROV(QObject *parent = 0);
+    QTimer timer;
+    int timer_period{10};
 
 signals:
 
@@ -65,15 +67,13 @@ public slots:
 
 private:
 
-    int timer_period{10};
-
     ModelParams modelParams;
 
     QVector<double> z_final;
     QVector<double> x_final;
     //QVector<QString> direction;
 
-    QTimer timer;
+
     UdpSender udp;
 
     void polar_to_cartesian(double &x, double &y, float r, float theta);
@@ -88,13 +88,6 @@ private:
     void calc_position();
 
     bool received_packet;
-
-    //заданный, текущий курс и угловая скорость по курсу
-    double psiDesired,psiCurrent,dPsi;
-    //коэффициенты K1,K2
-    double K1,K2;
-    //управляющий сигнал
-    double Upsi;
 
     // ********* Отправляем **********************
     int dot_number{0};

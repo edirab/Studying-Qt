@@ -13,8 +13,8 @@ void MainWindow::resizeEvent(QResizeEvent *event){
         QPoint camGroupBoxCurrentPos = this->ui->groupBoxCamera->pos();
         QPoint posGroupBoxCurrentPos = this->ui->groupBoxPosition->pos();
         QPoint labelHintCurrentPos = this->ui->labelHint->pos();
-        QPoint hSliderCurrentPos = this->ui->hSlider_timeline->pos();
-        QPoint labelTimelineCurrentPos = this->ui->label_timeline->pos();
+        //QPoint hSliderCurrentPos = this->ui->hSlider_timeline->pos();
+        //QPoint labelTimelineCurrentPos = this->ui->label_timeline->pos();
 
         QSize grahicsViewCurrSize = this->ui->graphicsView->size();
 
@@ -23,48 +23,12 @@ void MainWindow::resizeEvent(QResizeEvent *event){
         this->ui->groupBoxPosition->move(posGroupBoxCurrentPos.x() + deltaX, posGroupBoxCurrentPos.y());
         this->ui->labelHint->move(labelHintCurrentPos.x() + deltaX, labelHintCurrentPos.y());
 
-        //this->ui->hSlider_timeline->setSizeIncrement(deltaX, 0);
-        this->ui->hSlider_timeline->move(hSliderCurrentPos.x(), hSliderCurrentPos.y() + deltaY);
-        this->ui->label_timeline->move(labelTimelineCurrentPos.x() + deltaX, labelTimelineCurrentPos.y() + deltaY);
-
         if (debugResize){
             qDebug() << "Main Window size: " << this->size() << ", Old size:  " << event->oldSize() << " delta: " << deltaX;
             qDebug() << camGroupBoxCurrentPos << " " << posGroupBoxCurrentPos;
             qDebug() << "New Pos: " << QPoint(camGroupBoxCurrentPos.x() + deltaX, camGroupBoxCurrentPos.y());
         }
  }
-}
-
-
-void MainWindow::keyPressEvent(QKeyEvent *event) {
-    qDebug() << "Обработка стрелочек";
-
-    int key=event->nativeVirtualKey(); //event->key() - целочисленный код клавиши
-    bool useArrows = false;
-
-    if (useArrows){
-        switch (key) {
-            case Qt::Key_Right:
-
-            break;
-
-            case Qt::Key_Left:
-
-            break;
-
-            case Qt::Key_Up:
-
-            break;
-
-            case Qt::Key_Down:
-
-            break;
-
-            default:
-                qDebug() << "Unknown";
-            break;
-        }
-    }
 }
 
 /*
@@ -94,7 +58,7 @@ void MainWindow::receiveViewingAngle(int angle){
 void MainWindow::setButtonStartAnimationActive(){
     qDebug() << "Activate Start Anim Push Button \n";
     this->ui->pushButton_startDocking->setEnabled(true);
-    this->ui->hSlider_timeline->setEnabled(true);
+    //this->ui->hSlider_timeline->setEnabled(true);
 
     QString start_hint = "<html> \
                         <head/> \
@@ -127,15 +91,6 @@ void MainWindow::receiveCoordsDuringAnimation(float X_, float Z_, float Yaw){
     this->ui->lineEdit_Yaw->setText(QString::number(Yaw));
 }
 
-/*
-    Slot 6
-*/
-void MainWindow::updateSliderAndLabel(int currentStep, int total){
-    //qDebug() << "Setting slider step... \n";
-    this->ui->hSlider_timeline->setValue(currentStep);
-    QString labelText = QString::number(currentStep) + "/" + QString::number(total);
-    this->ui->label_timeline->setText(labelText);
-}
 
 /*
     Slot 7
@@ -183,14 +138,11 @@ MainWindow::MainWindow(QWidget *parent)
     this->timer->start(50);
 
     this->ui->graphicsView->setScene(myScene);
-    this->ui->pushButton_startDocking->setEnabled(false);
-    this->ui->hSlider_timeline->setEnabled(false);
 
     /*
     Соединяем сигналы со слотами
     */
-    bool bOk = QObject::connect(myScene->auv, SIGNAL(sendCoords(int, int, int)), this, SLOT(receiveCoords(int, int, int)));
-    //bool bOk = QObject::connect(myScene->auv, &AUV::sendCoords, this, &MainWindow::receiveCoords);
+    bool bOk = QObject::connect(myScene->auv, &AUV::sendCoords, this, &MainWindow::receiveCoords);
     bOk = bOk && QObject::connect(ui->horizontalSlider, &QSlider::valueChanged, this, &MainWindow::receiveViewingAngle);
 
 
@@ -199,9 +151,6 @@ MainWindow::MainWindow(QWidget *parent)
     проверяем корректность данных.
     Инициируем отрисовку
     */
-    bOk = bOk && QObject::connect(ui->pushButton_loadFile, &QPushButton::clicked, myScene, &MyScene::readFile);
-    bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadSuccessful, this, &MainWindow::setButtonStartAnimationActive);
-    bOk = bOk && QObject::connect(this->myScene , &MyScene::fileReadFailed, this, &MainWindow::showInformationMessage);
     bOk = bOk && QObject::connect(ui->pushButton_startDocking, &QPushButton::toggled, this, &MainWindow::customStartAmin);
 
 
@@ -209,23 +158,13 @@ MainWindow::MainWindow(QWidget *parent)
     Возможные ситуативные действия во время автоматически запущенной анимации
     */
     bOk = bOk && QObject::connect(this->myScene , &MyScene::sendCoordsDuringAnimation, this, &MainWindow::receiveCoordsDuringAnimation);
-    bOk = bOk && QObject::connect(this->myScene , &MyScene::sendCurrentIterationStep, this, &MainWindow::updateSliderAndLabel);
-    //bOk = bOk && QObject::connect(ui->checkBox_showTrajectory, &QCheckBox::clicked, myScene , &MyScene::toggleTrajectory);
 
     /*
     Способы остановить анимацию
     */
-    bOk = bOk && QObject::connect(ui->hSlider_timeline, &QSlider::sliderPressed, myScene, &MyScene::stopAnimTimer);
-    bOk = bOk && QObject::connect(ui->hSlider_timeline, &QSlider::sliderPressed, [this]() {
-        this->state = 0;
-        this->ui->pushButton_startDocking->setChecked(false);
-        this->ui->pushButton_startDocking->setText("Продолжить");
-    });
+
     bOk = bOk && QObject::connect(this, &MainWindow::startAnimation, myScene, &MyScene::startAminTimer);
     bOk = bOk && QObject::connect(this, &MainWindow::pauseAmination, myScene, &MyScene::stopAnimTimer);
-
-    bOk = bOk && QObject::connect(ui->hSlider_timeline, &QSlider::sliderMoved, myScene, &MyScene::sliderMoved);
-    bOk = bOk && QObject::connect(ui->hSlider_timeline, &QSlider::sliderMoved, myScene, &MyScene::stopAnimTimer);
 
     Q_ASSERT(bOk);
 }

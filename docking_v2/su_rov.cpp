@@ -8,15 +8,8 @@ SU_ROV::SU_ROV(QObject *parent) : QObject(parent)
 //    z_final.push_back(0);
 //    x_final.push_back(12);
 
-    psiDesired = 10;
-    psiCurrent =0;
-    K1=2;
-    K2=1;
-    dPsi =0;
-    Upsi =0;
-
     connect(&timer, SIGNAL(timeout()), SLOT(tick()));
-    timer.start(this->timer_period);
+
 
 }
 

@@ -25,7 +25,6 @@ class MainWindow : public QWidget
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void keyPressEvent(QKeyEvent *event) override;
 
     MyScene      *myScene;
 private:
@@ -52,7 +51,6 @@ public slots:
     void setButtonStartAnimationActive();
     void showInformationMessage(QString);
     void receiveCoordsDuringAnimation(float, float, float);
-    void updateSliderAndLabel(int, int);
 
     void customStartAmin();
 signals:

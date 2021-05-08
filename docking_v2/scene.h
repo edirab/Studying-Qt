@@ -33,7 +33,6 @@ public:
     chargingStation *Station;
     Trajectory *trajectory;
 
-    QVector<QVector<float>> data;
     QTimer *animTimer;
     int animIteration = 0;
 
@@ -41,17 +40,12 @@ private:
     int animationStep = 5; // ms
 
 public slots:
-    void readFile();
+
     void AnimationStep();
     void startAminTimer();
     void stopAnimTimer();
-    void toggleTrajectory();
-    void sliderMoved(int);
-
 
 signals:
-    void fileReadSuccessful();
-    void fileReadFailed(QString);
     void sendCoordsDuringAnimation(float, float, float);
     void sendCurrentIterationStep(int, int);
 

@@ -41,20 +41,21 @@ void Trajectory::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidg
 
         x_projection_prev = int(Z_ * 0.5 * SCALE_FACTOR);
         y_projection_prev = - int(X_ * 0.5 * SCALE_FACTOR) ;
-    }
 
-    for (int i = 0; i < (*animIteration_ptr) - 1 /*data.size() - 1*/; i++) {
 
-        float X_ = data[i][1] ;
-        float Z_ = data[i][2] ;
+        for (int i = 0; i < (*animIteration_ptr) - 1 /*data.size() - 1*/; i++) {
 
-        int x_projection = int(Z_ * 0.5 * SCALE_FACTOR);
-        int y_projection = - int(X_ * 0.5 * SCALE_FACTOR) ;
+            float X_ = data[i][1] ;
+            float Z_ = data[i][2] ;
 
-        painter->drawLine(x_projection_prev, y_projection_prev,
-                          x_projection, y_projection);
+            int x_projection = int(Z_ * 0.5 * SCALE_FACTOR);
+            int y_projection = - int(X_ * 0.5 * SCALE_FACTOR) ;
 
-        x_projection_prev = x_projection;
-        y_projection_prev = y_projection;
+            painter->drawLine(x_projection_prev, y_projection_prev,
+                              x_projection, y_projection);
+
+            x_projection_prev = x_projection;
+            y_projection_prev = y_projection;
+        }
     }
 }
