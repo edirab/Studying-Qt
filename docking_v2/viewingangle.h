@@ -16,7 +16,7 @@ public:
     float mAngle;
 
     explicit viewingAngle(QObject *parent = nullptr);
-    viewingAngle(QObject *parent, int mAngle);
+    explicit viewingAngle(QObject *parent, int mAngle);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
     QRectF boundingRect() const override;

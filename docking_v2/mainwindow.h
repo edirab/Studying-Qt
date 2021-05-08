@@ -12,6 +12,7 @@
 #include <QSlider>
 
 #include <scene.h>
+#include "su_rov.h"
 
 
 QT_BEGIN_NAMESPACE

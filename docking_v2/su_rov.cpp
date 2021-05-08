@@ -9,8 +9,6 @@ SU_ROV::SU_ROV(QObject *parent) : QObject(parent)
 //    x_final.push_back(12);
 
     connect(&timer, SIGNAL(timeout()), SLOT(tick()));
-
-
 }
 
 void SU_ROV::polar_to_cartesian(double &x, double &y, float r, float theta){
@@ -212,9 +210,7 @@ void SU_ROV::tick()
              << "Real yaw: " << real_yaw
              << "Real Vfwd: " << V_fwd <<  "\n";
 
-    // остатки древней цивилизации
-    //Upsi = (psiDesired - psiCurrent)*K1 - K2*dPsi;
-
+   emit sendComputedCoords(X_current, Z_current, real_yaw);
 
     //Upsi = 10;
     udp.send(this->deflection_yaw_constrained, this->dir, this->X_current, this->Z_current);

@@ -35,6 +35,7 @@ MyScene::MyScene(QWidget *parent)
     animTimer->setInterval(this->animationStep);
 
     bool bOk = QObject::connect(this->animTimer, &QTimer::timeout, this, &MyScene::AnimationStep);
+    bOk = bOk && QObject::connect(&(this->auv->su), &SU_ROV::sendComputedCoords, this->trajectory, &Trajectory::receiveComputedCoords);
     Q_ASSERT(bOk);
 }
 
@@ -58,11 +59,11 @@ void MyScene::AnimationStep(){
 
     //qDebug() << "Animation step:" << animIteration << "\n";
 
-    if (animIteration < 8000){
+    if (this->trajectory->data.size() > 0){
         // Time, X (up), Z(right), Yaw (Counter Clockwise)
-        float X_ = 0;// data[animIteration][1] ;
-        float Z_ = 0; // data[animIteration][2] ;
-        float Yaw = 180; // data[animIteration][3];
+        float X_ = this->trajectory->data.back().X;
+        float Z_ = this->trajectory->data.back().Z;
+        float Yaw = this->trajectory->data.back().Yaw;
 
         int x_projection = int(Z_ * 0.5 * SCALE_FACTOR);
         int y_projection = - int(X_ * 0.5 * SCALE_FACTOR) ;
@@ -88,8 +89,8 @@ void MyScene::AnimationStep(){
 */
 void MyScene::startAminTimer(){
 
-    animTimer->start();
-    this->auv->su.timer.start(this->auv->su.timer_period);
+    this->animTimer->start();
+    this->auv->su.timer.start();
     qDebug() << "Запуск таймера \n";
 }
 

@@ -11,6 +11,15 @@
 #include <QGraphicsItem>
 #include <QGraphicsItemGroup>
 
+struct Coords{
+    float timePoint{0};
+    float X;
+    float Z;
+    float Yaw;
+};
+
+
+
 class Trajectory : public QObject, public QGraphicsItem
 {
     Q_OBJECT
@@ -18,7 +27,7 @@ class Trajectory : public QObject, public QGraphicsItem
 public:
 
     QGraphicsScene *scene;
-    QVector<QVector<float>> data;
+    QList<Coords> data;
     //int &animIteration_ref;
     int *animIteration_ptr = nullptr;
 
@@ -28,7 +37,7 @@ public:
     QRectF boundingRect() const override;
 
 public slots:
-    //void getAnimIteration(int, int);
+    void receiveComputedCoords(float X, float Z, float Yaw);
 };
 
 #endif // TRAJECTORY_H

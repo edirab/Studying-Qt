@@ -2,6 +2,7 @@
 #define AUV_H
 
 #include "parameters.h"
+#include "trajectory.h"
 #include "su_rov.h"
 
 #include <QObject>
@@ -24,6 +25,7 @@ class AUV : public QObject, public QGraphicsItem
     Q_INTERFACES(QGraphicsItem)
 public:
     SU_ROV su;
+
     bool mDebug = false;
 
     int mSceneX, mSceneY; // Экранные координаты

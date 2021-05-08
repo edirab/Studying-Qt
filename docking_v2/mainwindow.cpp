@@ -140,18 +140,15 @@ MainWindow::MainWindow(QWidget *parent)
     this->ui->graphicsView->setScene(myScene);
 
     /*
-    Соединяем сигналы со слотами
+        Соединяем сигналы со слотами
     */
     bool bOk = QObject::connect(myScene->auv, &AUV::sendCoords, this, &MainWindow::receiveCoords);
     bOk = bOk && QObject::connect(ui->horizontalSlider, &QSlider::valueChanged, this, &MainWindow::receiveViewingAngle);
 
-
     /*
-    Загружаем файл из главного окна,
-    проверяем корректность данных.
-    Инициируем отрисовку
+        Инициируем отрисовку
     */
-    bOk = bOk && QObject::connect(ui->pushButton_startDocking, &QPushButton::toggled, this, &MainWindow::customStartAmin);
+    bOk = bOk && QObject::connect(ui->pushButton_startDocking, &QPushButton::clicked, this, &MainWindow::customStartAmin);
 
 
     /*
@@ -160,7 +157,7 @@ MainWindow::MainWindow(QWidget *parent)
     bOk = bOk && QObject::connect(this->myScene , &MyScene::sendCoordsDuringAnimation, this, &MainWindow::receiveCoordsDuringAnimation);
 
     /*
-    Способы остановить анимацию
+        Способы остановить анимацию
     */
 
     bOk = bOk && QObject::connect(this, &MainWindow::startAnimation, myScene, &MyScene::startAminTimer);

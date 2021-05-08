@@ -35,8 +35,6 @@ struct AUV_{
     double k2_yaw = 0.6370;
 
     double kc = 57.2958;
-
-
 };
 
 
@@ -57,10 +55,12 @@ class SU_ROV : public QObject
     Q_OBJECT
 public:
     explicit SU_ROV(QObject *parent = 0);
+
     QTimer timer;
     int timer_period{10};
 
 signals:
+    void sendComputedCoords(float X, float Z, float Yaw);
 
 public slots:
     void tick();

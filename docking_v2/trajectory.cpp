@@ -7,6 +7,23 @@ Trajectory::Trajectory(QGraphicsScene *s, QObject *parent, int* animIteration):
 
 }
 
+void Trajectory::receiveComputedCoords(float X, float Z, float Yaw){
+
+    qDebug() << "In receiveComputedCoords: " << this->data.size()
+             << " " << X
+             << " " << Z
+             << " " << Yaw << " " << "\n";
+
+    if (X != 15 && Z != 0){
+
+        Coords c;
+        c.X = X;
+        c.Z = Z;
+        c.Yaw = Yaw;
+
+        this->data.append(c);
+    }
+}
 
 QRectF Trajectory::boundingRect() const {
 
@@ -36,17 +53,17 @@ void Trajectory::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidg
 
     if (data.size()){
 
-        float X_ = data[0][1] ;
-        float Z_ = data[0][2] ;
+        float X_ = data[0].X;
+        float Z_ = data[0].Z;
 
         x_projection_prev = int(Z_ * 0.5 * SCALE_FACTOR);
         y_projection_prev = - int(X_ * 0.5 * SCALE_FACTOR) ;
 
 
-        for (int i = 0; i < (*animIteration_ptr) - 1 /*data.size() - 1*/; i++) {
+        for (int i = 0; i < data.size(); i++) {
 
-            float X_ = data[i][1] ;
-            float Z_ = data[i][2] ;
+            float X_ = data[i].X;
+            float Z_ = data[i].Z;
 
             int x_projection = int(Z_ * 0.5 * SCALE_FACTOR);
             int y_projection = - int(X_ * 0.5 * SCALE_FACTOR) ;
