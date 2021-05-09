@@ -16,9 +16,11 @@ struct ToMatlab{
 
 struct FromMatlab{
     FromMatlab(){
+        real_yaw_vel = 0;
         real_yaw = 0;
         real_V = 0;
     }
+    double real_yaw_vel;
     double real_yaw;
     double real_V;
 };

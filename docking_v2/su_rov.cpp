@@ -160,7 +160,7 @@ void SU_ROV::constrain_yaw(){
 
 void SU_ROV::calc_position(){
 
-    double L = V_fwd * timer_period / 1000 ; // ms
+    double L = real_V_fwd * timer_period / 1000 ; // ms
 
     double shortTravel_Z = L * sin(qDegreesToRadians(real_yaw));
     double shortTravel_X = L * cos(qDegreesToRadians(real_yaw));
@@ -170,14 +170,26 @@ void SU_ROV::calc_position(){
     return;
 }
 
+double SU_ROV::saturation_block(double value, double upper_lim, double lower_lim){
+
+    if (value > upper_lim){
+        return upper_lim;
+    } else if (value < lower_lim){
+        return lower_lim;
+    }else {
+        return value;
+    }
+
+}
 
 void SU_ROV::tick()
 {
     // Получаем данные
     //dPsi = udp.getData().dPsi;
     //psiCurrent = udp.getData().Psi;
+    this->real_yaw_vel = udp.getData().real_yaw_vel;
     this->real_yaw = udp.getData().real_yaw;
-    this->V_fwd = udp.getData().real_V;
+    this->real_V_fwd = udp.getData().real_V;
 
     // Вычисляем
     calc_position();
@@ -188,10 +200,6 @@ void SU_ROV::tick()
     this->X1 = x_final[dot_number];
     this->Z1 = z_final[dot_number];
 
-    // debug: test_1
-//    this->X1 = x_final[0];
-//    this->Z1 = z_final[0];
-
     calc_dir();
     check_end_simulation();
     calc_desired_yaw();
@@ -200,6 +208,8 @@ void SU_ROV::tick()
     this->U_fwd = this->dir * this->modelParams.Vfwd * this->modelParams.auv.k1_m;
     this->U_yaw = (this->deflection_yaw_constrained - this->real_yaw) * this->modelParams.auv.k1_yaw;
 
+    this->U_bfs_yaw_1 = saturation_block(U_yaw - this->modelParams.auv.k2_yaw * real_yaw_vel);
+
     qDebug() << "Z_curr: " << Z_current
              << "X_curr: " << X_current
              << "Z_fin: " << z_final[dot_number]
@@ -207,7 +217,7 @@ void SU_ROV::tick()
              << "Des. yaw: " << desired_yaw
              << "Constr.: " << deflection_yaw_constrained
              << "Real yaw: " << real_yaw
-             << "Real Vfwd: " << V_fwd <<  "\n";
+             << "Real Vfwd: " << real_V_fwd <<  "\n";
 
     emit sendComputedCoords(X_current, Z_current, real_yaw);
 

@@ -87,6 +87,7 @@ private:
     void check_distance();
 
     void calc_position();
+    double saturation_block(double value, double upper_lim = 24, double lower_lim = -24);
 
     bool received_packet;
 
@@ -107,9 +108,13 @@ private:
     double U_fwd{0}; // На выходе регуляторов k1_m, k1_yaw
     double U_yaw{0};
 
+    double U_bfs_yaw_1{0};
+
     // ********* Получаем *************************
-    double V_fwd{0.7}; // получаем по UDP
+    double real_yaw_vel{0};
     double real_yaw{180};
+    double real_V_fwd{0.7}; // получаем по UDP
+
 };
 
 #endif // SU_ROV_H
