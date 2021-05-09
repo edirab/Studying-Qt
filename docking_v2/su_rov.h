@@ -45,6 +45,7 @@ public:
     AUV_ auv;
     HydroDyn hDyn;
 
+    double Vfwd = 1.3; // м/с
     double Rmin = 0.4;
     double Z_delay = 0.01;
 };
@@ -89,20 +90,22 @@ private:
 
     bool received_packet;
 
-    // ********* Отправляем **********************
-    int dot_number{0};
-
-    double X1{13}; // На 2 м выше самой первой точки
-    double Z1{0};
-    double dir{1}; // 1 - fwd, -1 - backward, 0 - stop sim
-
-
     // ********* Рассчитывем в коде ***************
     double X_current{15};
     double Z_current{0};
 
     double desired_yaw{180};
+    int dot_number{0};
+
+    double X1{13}; // На 2 м выше самой первой точки
+    double Z1{0};
+
+    // ********* Отправляем **********************
     double deflection_yaw_constrained{180};
+    double dir{1}; // 1 - fwd, -1 - backward, 0 - stop sim
+
+    double U_fwd{0}; // На выходе регуляторов k1_m, k1_yaw
+    double U_yaw{0};
 
     // ********* Получаем *************************
     double V_fwd{0.7}; // получаем по UDP
