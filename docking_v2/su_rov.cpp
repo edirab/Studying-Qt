@@ -208,7 +208,7 @@ void SU_ROV::tick()
     this->U_fwd = this->dir * this->modelParams.Vfwd * this->modelParams.auv.k1_m;
     this->U_yaw = (this->deflection_yaw_constrained - this->real_yaw) * this->modelParams.auv.k1_yaw;
 
-    this->U_bfs_yaw_1 = saturation_block(U_yaw - this->modelParams.auv.k2_yaw * real_yaw_vel);
+    this->U_bfs_yaw_1 = saturation_block(this->U_yaw - this->modelParams.auv.k2_yaw * qRadiansToDegrees(this->real_yaw_vel));
 
     qDebug() << "Z_curr: " << Z_current
              << "X_curr: " << X_current
@@ -222,7 +222,8 @@ void SU_ROV::tick()
     emit sendComputedCoords(X_current, Z_current, real_yaw);
 
     //udp.send(this->deflection_yaw_constrained, this->dir, this->X_current, this->Z_current);
-    udp.send(this->U_yaw, U_fwd, this->X_current, this->Z_current);
+    //udp.send(this->U_yaw, U_fwd, this->X_current, this->Z_current);
+    udp.send(this->U_bfs_yaw_1, U_fwd, this->X_current, this->Z_current);
 
 }
 
