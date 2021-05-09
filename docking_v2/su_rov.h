@@ -45,6 +45,7 @@ public:
     AUV_ auv;
     HydroDyn hDyn;
 
+    double Vfwd = 1.3; // м/с
     double Rmin = 0.4;
     double Z_delay = 0.01;
 };
@@ -88,6 +89,9 @@ private:
     void calc_position();
 
     bool received_packet;
+
+    double U_fwd{0}; // На выходе регуляторов k1_m, k1_yaw
+    double U_yaw{0};
 
     // ********* Отправляем **********************
     int dot_number{0};

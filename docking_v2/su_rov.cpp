@@ -197,6 +197,9 @@ void SU_ROV::tick()
     calc_desired_yaw();
     constrain_yaw();
 
+    this->U_fwd = this->dir * this->modelParams.Vfwd * this->modelParams.auv.k1_m;
+    this->U_yaw = (this->deflection_yaw_constrained - this->real_yaw) * this->modelParams.auv.k1_yaw;
+
     qDebug() << "Z_curr: " << Z_current
              << "X_curr: " << X_current
              << "Z_fin: " << z_final[dot_number]
@@ -206,10 +209,10 @@ void SU_ROV::tick()
              << "Real yaw: " << real_yaw
              << "Real Vfwd: " << V_fwd <<  "\n";
 
-   emit sendComputedCoords(X_current, Z_current, real_yaw);
+    emit sendComputedCoords(X_current, Z_current, real_yaw);
 
-    //Upsi = 10;
-    udp.send(this->deflection_yaw_constrained, this->dir, this->X_current, this->Z_current);
+    //udp.send(this->deflection_yaw_constrained, this->dir, this->X_current, this->Z_current);
+    udp.send(this->U_yaw, U_fwd, this->X_current, this->Z_current);
 }
 
 
