@@ -137,7 +137,7 @@ void SU_ROV::check_end_simulation(){
 //        this->timer.stop();
 //    }
 
-    if (Z1 >= 13 && Z_current >= 12.5){
+    if (Z_current >= 12.5){
         this->timer.stop();
     }
 }
@@ -209,6 +209,10 @@ void SU_ROV::tick()
     this->U_yaw = (this->deflection_yaw_constrained - this->real_yaw) * this->modelParams.auv.k1_yaw;
 
     this->U_bfs_yaw_1 = saturation_block(this->U_yaw - this->modelParams.auv.k2_yaw * qRadiansToDegrees(this->real_yaw_vel));
+    this->U_bfs_fwd_1 = saturation_block(U_fwd - this->modelParams.auv.k2_m);
+
+    this->U_bfs_yaw_out = saturation_block(this->U_bfs_yaw_1 + U_bfs_fwd_1);
+    this->U_bfs_fwd_out = saturation_block(this->U_bfs_yaw_1 - U_bfs_fwd_1 );
 
     qDebug() << "Z_curr: " << Z_current
              << "X_curr: " << X_current
@@ -219,11 +223,12 @@ void SU_ROV::tick()
              << "Real yaw: " << real_yaw
              << "Real Vfwd: " << real_V_fwd <<  "\n";
 
-    emit sendComputedCoords(X_current, Z_current, real_yaw);
+    emit sendComputedCoords(X_current, Z_current, real_yaw); // to Trajectory class
 
     //udp.send(this->deflection_yaw_constrained, this->dir, this->X_current, this->Z_current);
     //udp.send(this->U_yaw, U_fwd, this->X_current, this->Z_current);
-    udp.send(this->U_bfs_yaw_1, U_fwd, this->X_current, this->Z_current);
+    //udp.send(this->U_bfs_yaw_1, U_bfs_fwd_1, this->X_current, this->Z_current);
+    udp.send(this->U_bfs_yaw_out, U_bfs_fwd_out, this->X_current, this->Z_current);
 
 }
 

@@ -109,6 +109,10 @@ private:
     double U_yaw{0};
 
     double U_bfs_yaw_1{0};
+    double U_bfs_fwd_1{0};
+
+    double U_bfs_fwd_out{0};
+    double U_bfs_yaw_out{0};
 
     // ********* Получаем *************************
     double real_yaw_vel{0};
