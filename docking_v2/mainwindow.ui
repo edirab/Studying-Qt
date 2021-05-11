@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Визуализация обхода донной станции</string>
   </property>
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
