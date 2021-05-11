@@ -80,6 +80,17 @@ void MainWindow::receiveCoordsDuringAnimation(float X_, float Z_, float Yaw){
 void MainWindow::customStartAmin(){
     qDebug() << "Обработчик кнопки запуска/останова анимации: " << state;
 
+    double V_fwd = (this->ui->lineEdit_Vfwd->text().toDouble());
+    double k1_m = (this->ui->lineEdit_k1_m->text().toDouble());
+    double k2_m = (this->ui->lineEdit_k2_m->text().toDouble());
+    double k1_yaw = (this->ui->lineEdit_k1_yaw->text().toDouble());
+    double k2_yaw = (this->ui->lineEdit_k2_yaw->text().toDouble());
+
+    emit send_su_params(V_fwd, k1_m, k2_m, k1_yaw, k2_yaw);
+
+    qDebug() <<"In Main Waindow: " << V_fwd << " " << k1_m << " " << k2_m << " " << k1_yaw << " " << k2_yaw << "\n";
+
+
     QString stop_continue_hint = "<html> \
                         <head/> \
                         <body> \
@@ -94,10 +105,21 @@ void MainWindow::customStartAmin(){
         state = 1;
         emit startAnimation();
         this->ui->pushButton_startDocking->setText(QString("Пауза"));
+        this->ui->lineEdit_Vfwd->setEnabled(false);
+        this->ui->lineEdit_k1_m->setEnabled(false);
+        this->ui->lineEdit_k2_m->setEnabled(false);
+        this->ui->lineEdit_k1_yaw->setEnabled(false);
+        this->ui->lineEdit_k2_yaw->setEnabled(false);
+
     } else {
         state = 0;
         emit pauseAmination();
         this->ui->pushButton_startDocking->setText(QString("Продолжить"));
+        this->ui->lineEdit_Vfwd->setEnabled(true);
+        this->ui->lineEdit_k1_m->setEnabled(true);
+        this->ui->lineEdit_k2_m->setEnabled(true);
+        this->ui->lineEdit_k1_yaw->setEnabled(true);
+        this->ui->lineEdit_k2_yaw->setEnabled(true);
     }
 }
 
@@ -126,6 +148,7 @@ MainWindow::MainWindow(QWidget *parent)
     */
     bool bOk = QObject::connect(myScene->auv, &AUV::sendCoords, this, &MainWindow::receiveCoords);
     bOk = bOk && QObject::connect(ui->horizontalSlider, &QSlider::valueChanged, this, &MainWindow::receiveViewingAngle);
+    bOk = bOk && QObject::connect(this, &MainWindow::send_su_params, this->myScene->auv, &AUV::receive_su_params);
 
     /*
         Инициируем отрисовку

@@ -16,11 +16,29 @@ UdpSender::UdpSender(QObject *prt):QObject(prt)
 }
 
 
-void UdpSender::send(double desired_yaw, double dir, double X_curr, double Z_curr){
-    sendData.desired_yaw = desired_yaw;
-    sendData.dir = dir;
+void UdpSender::send(double U_bfs_yaw_out,
+                     double U_bfs_fwd_out,
+                     double X_curr,
+                     double Z_curr,
+                     double U_yaw,
+                     double U_fwd,
+                     double U_bfs_yaw_1,
+                     double U_bfs_fwd_1,
+                     double curr_sin_integral)
+{
+    sendData.U_bfs_yaw_out = U_bfs_yaw_out;
+    sendData.U_bfs_fwd_out = U_bfs_fwd_out;
     sendData.curr_X = X_curr;
     sendData.curr_Z = Z_curr;
+
+    sendData.U_yaw = U_yaw;
+    sendData.U_fwd = U_fwd;
+
+    sendData.U_bfs_yaw_1 = U_bfs_yaw_1;
+    sendData.U_bfs_fwd_1 = U_bfs_fwd_1;
+
+    // test
+    sendData.curr_sin_integral = curr_sin_integral;
 
     qDebug()<<m_socket->writeDatagram((char*)&sendData, sizeof(sendData), QHostAddress::LocalHost, 13042);
 }

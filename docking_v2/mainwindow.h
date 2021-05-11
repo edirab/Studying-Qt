@@ -57,6 +57,7 @@ public slots:
 signals:
     void startAnimation();
     void pauseAmination();
+    void send_su_params(double V_fwd, double k1_m, double k2_m, double k1_yaw, double k2_yaw);
 };
 #endif // MAINWINDOW_H
 

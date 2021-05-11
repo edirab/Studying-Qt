@@ -55,6 +55,8 @@ private:
     int stepLin = 6;
     int stepRot = 5;
 
+public slots:
+    void receive_su_params(double V_fwd, double k1_m, double k2_m, double k1_yaw, double k2_yaw);
 
 signals:
     void sendCoords(int x, int y, int yaw);

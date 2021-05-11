@@ -51,9 +51,9 @@
    <property name="geometry">
     <rect>
      <x>760</x>
-     <y>150</y>
+     <y>300</y>
      <width>180</width>
-     <height>201</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="title">
@@ -63,7 +63,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>140</y>
+      <y>110</y>
       <width>156</width>
       <height>21</height>
      </rect>
@@ -166,7 +166,7 @@
      <x>760</x>
      <y>30</y>
      <width>180</width>
-     <height>111</height>
+     <height>81</height>
     </rect>
    </property>
    <property name="title">
@@ -224,9 +224,9 @@
    <property name="geometry">
     <rect>
      <x>760</x>
-     <y>360</y>
+     <y>440</y>
      <width>171</width>
-     <height>121</height>
+     <height>71</height>
     </rect>
    </property>
    <property name="inputMethodHints">
@@ -238,6 +238,158 @@
    <property name="textFormat">
     <enum>Qt::RichText</enum>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>120</y>
+     <width>181</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Система управления</string>
+   </property>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>V марш.</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Vfwd">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>20</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0.8</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>k1 марш.</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_k1_m">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>50</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>4.5227</string>
+    </property>
+    <property name="placeholderText">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_k2_m">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>80</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>5.32</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_k1_yaw">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>110</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0.5146</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>k2 марш.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>110</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>k1 курс</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>140</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>k2 курс</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_k2_yaw">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>140</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0.6370</string>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

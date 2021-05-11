@@ -58,6 +58,23 @@ void AUV::truncateYaw(){
 }
 
 
+void AUV::receive_su_params(double V_fwd, double k1_m, double k2_m, double k1_yaw, double k2_yaw){
+
+     //qDebug() << "In AUV: " << V_fwd << " " << k1_m << " " << k2_m << " " << k1_yaw << " " << k2_yaw << "\n";
+
+     if (V_fwd >= 0.3 && V_fwd <= 1.3){
+        this->su.modelParams.Vfwd = V_fwd;
+     }
+
+    // Никаких проверок
+    if (k1_m > 0) this->su.k1_m = k1_m;
+    if (k2_m > 0) this->su.k2_m = k2_m;
+    if (k1_yaw > 0) this->su.k1_yaw = k1_yaw;
+    if (k2_yaw > 0) this->su.k2_yaw = k2_yaw;
+
+
+}
+
 void AUV::keyboardRedraw(QKeyEvent *event){
 
     int key=event->nativeVirtualKey(); //event->key() - целочисленный код клавиши

@@ -3,7 +3,6 @@
 SU_ROV::SU_ROV(QObject *parent) : QObject(parent)
 {
     generate_path_points();
-
     connect(&timer, SIGNAL(timeout()), SLOT(tick()));
 }
 
@@ -68,11 +67,9 @@ void SU_ROV::generate_path_points()
     for (int i = 0; i < x_outer.size(); i++){
         this->z_final.push_back((x_outer[i]));
         this->z_final.push_back((x_inner[i]));
-        //this->direction.push_back("forward");
 
         this->x_final.push_back(y_outer[i]);
         this->x_final.push_back(y_inner[i]);
-        //this->direction.push_back("backward");
     }
 }
 
@@ -179,19 +176,24 @@ double SU_ROV::saturation_block(double value, double upper_lim, double lower_lim
     }else {
         return value;
     }
-
 }
+
 
 void SU_ROV::tick()
 {
     // Получаем данные
-    //dPsi = udp.getData().dPsi;
-    //psiCurrent = udp.getData().Psi;
     this->real_yaw_vel = udp.getData().real_yaw_vel;
     this->real_yaw = udp.getData().real_yaw;
     this->real_V_fwd = udp.getData().real_V;
 
+    this->sin_curr = udp.getData().real_sin;
+    qDebug() << "sin_curr: " << sin_curr << " prev:" << sin_prev << " sin_summ: " << sin_summ <<  "\n";
     // Вычисляем
+
+    //double temp =
+    this->sin_summ += ( (sin_prev + sin_curr)/2 * ( (double)timer_period / 1000) );
+    this->sin_prev = sin_curr;
+
     calc_position();
     check_distance();
 
@@ -205,30 +207,33 @@ void SU_ROV::tick()
     calc_desired_yaw();
     constrain_yaw();
 
-    this->U_fwd = this->dir * this->modelParams.Vfwd * this->modelParams.auv.k1_m;
-    this->U_yaw = (this->deflection_yaw_constrained - this->real_yaw) * this->modelParams.auv.k1_yaw;
+    this->U_fwd = this->dir * this->modelParams.Vfwd * this->k1_m;
+    this->U_yaw = (this->deflection_yaw_constrained - this->real_yaw) * this->k1_yaw;
 
-    this->U_bfs_yaw_1 = saturation_block(this->U_yaw - this->modelParams.auv.k2_yaw * qRadiansToDegrees(this->real_yaw_vel));
-    this->U_bfs_fwd_1 = saturation_block(U_fwd - this->modelParams.auv.k2_m);
+    this->U_bfs_yaw_1 = saturation_block(this->U_yaw - this->k2_yaw * qRadiansToDegrees(this->real_yaw_vel));
+    this->U_bfs_fwd_1 = saturation_block(U_fwd - this->k2_m * this->real_V_fwd);
 
-    this->U_bfs_yaw_out = saturation_block(this->U_bfs_yaw_1 + U_bfs_fwd_1);
-    this->U_bfs_fwd_out = saturation_block(this->U_bfs_yaw_1 - U_bfs_fwd_1 );
+    this->U_bfs_yaw_out = saturation_block(this->U_bfs_yaw_1 + U_bfs_fwd_1, 12, -12);
+    this->U_bfs_fwd_out = saturation_block(this->U_bfs_yaw_1 - U_bfs_fwd_1, 12, -12);
 
-    qDebug() << "Z_curr: " << Z_current
-             << "X_curr: " << X_current
-             << "Z_fin: " << z_final[dot_number]
-             << "X_fin: " << x_final[dot_number]
-             << "Des. yaw: " << desired_yaw
-             << "Constr.: " << deflection_yaw_constrained
-             << "Real yaw: " << real_yaw
-             << "Real Vfwd: " << real_V_fwd <<  "\n";
+//    qDebug() << "Z_curr: " << Z_current
+//             << "X_curr: " << X_current
+//             << "Z_fin: " << z_final[dot_number]
+//             << "X_fin: " << x_final[dot_number]
+//             << "Dir: " << dir
+//             << "Des. yaw: " << desired_yaw
+//             << "Constr.: " << deflection_yaw_constrained
+//             << "Real yaw: " << real_yaw
+//             << "Real Vfwd: " << real_V_fwd <<  "\n";
 
     emit sendComputedCoords(X_current, Z_current, real_yaw); // to Trajectory class
 
-    //udp.send(this->deflection_yaw_constrained, this->dir, this->X_current, this->Z_current);
-    //udp.send(this->U_yaw, U_fwd, this->X_current, this->Z_current);
-    //udp.send(this->U_bfs_yaw_1, U_bfs_fwd_1, this->X_current, this->Z_current);
-    udp.send(this->U_bfs_yaw_out, U_bfs_fwd_out, this->X_current, this->Z_current);
+    udp.send(this->U_bfs_yaw_out, U_bfs_fwd_out, this->X_current, this->Z_current,
+             this->U_yaw,
+             this->U_fwd,
+             this->U_bfs_yaw_1,
+             this->U_bfs_fwd_1,
+             this->sin_summ);
 
 }
 

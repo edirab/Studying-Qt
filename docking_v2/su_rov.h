@@ -28,12 +28,6 @@ struct AUV_{
     double T_thruster = 0.3;
     double l = 0.225;
 
-    double k1_m = 4.5227;
-    double k2_m = 5.32;
-
-    double k1_yaw = 0.5146;
-    double k2_yaw = 0.6370;
-
     double kc = 57.2958;
 };
 
@@ -42,10 +36,10 @@ class ModelParams{
 
 public:
 
-    AUV_ auv;
-    HydroDyn hDyn;
+    //AUV_ auv;
+    //HydroDyn hDyn;
 
-    double Vfwd = 1.3; // м/с
+    double Vfwd = 1.3; //1.3; // м/с
     double Rmin = 0.4;
     double Z_delay = 0.01;
 };
@@ -60,6 +54,14 @@ public:
     QTimer timer;
     int timer_period{10};
 
+    ModelParams modelParams;
+
+    double k1_m = 4.5227;
+    double k2_m = 5.32;
+
+    double k1_yaw = 0.5146;
+    double k2_yaw = 0.6370;
+
 signals:
     void sendComputedCoords(float X, float Z, float Yaw);
 
@@ -68,12 +70,8 @@ public slots:
 
 private:
 
-    ModelParams modelParams;
-
     QVector<double> z_final;
     QVector<double> x_final;
-    //QVector<QString> direction;
-
 
     UdpSender udp;
 
@@ -87,11 +85,17 @@ private:
     void check_distance();
 
     void calc_position();
+
     double saturation_block(double value, double upper_lim = 24, double lower_lim = -24);
 
     bool received_packet;
 
     // ********* Рассчитывем в коде ***************
+
+    double sin_prev{0};
+    double sin_curr{0};
+    double sin_summ{0};
+
     double X_current{15};
     double Z_current{0};
 

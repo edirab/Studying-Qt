@@ -9,10 +9,10 @@ Trajectory::Trajectory(QGraphicsScene *s, QObject *parent, int* animIteration):
 
 void Trajectory::receiveComputedCoords(float X, float Z, float Yaw){
 
-    qDebug() << "In receiveComputedCoords: " << this->data.size()
-             << " " << X
-             << " " << Z
-             << " " << Yaw << " " << "\n";
+//    qDebug() << "In receiveComputedCoords: " << this->data.size()
+//             << " " << X
+//             << " " << Z
+//             << " " << Yaw << " " << "\n";
 
     if (X != 15 && Z != 0){
 
