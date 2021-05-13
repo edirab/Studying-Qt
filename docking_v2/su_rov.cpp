@@ -8,8 +8,8 @@ SU_ROV::SU_ROV(QObject *parent) : QObject(parent)
 
 void SU_ROV::polar_to_cartesian(double &x, double &y, float r, float theta){
 
-    x = r * cos(theta);
-    y = r * sin(theta);
+    x = r * qCos(theta);
+    y = r * qSin(theta);
     return;
 }
 
@@ -97,20 +97,20 @@ void SU_ROV::calc_desired_yaw(){
 
     // 1
     if (delta_x >= 0 && delta_z >= 0){
-        this->desired_yaw = qRadiansToDegrees(atan(delta_z / delta_x));
+        this->desired_yaw = qRadiansToDegrees(qAtan(delta_z / delta_x));
     }
     // 2
     else if (delta_x >= 0 && delta_z < 0){
-        this->desired_yaw = 360 - qRadiansToDegrees(atan(abs(delta_z) /  delta_x));
+        this->desired_yaw = 360 - qRadiansToDegrees(qAtan(qFabs(delta_z) /  delta_x));
 
     }
     // 3
     else if (delta_x < 0 && delta_z < 0){
-        this->desired_yaw = 180 + qRadiansToDegrees(atan(abs(delta_z)/ abs(delta_x)));
+        this->desired_yaw = 180 + qRadiansToDegrees(qAtan(qFabs(delta_z)/ qFabs(delta_x)));
     }
     // 4
     else if (delta_x < 0 && delta_z >= 0) {
-        this->desired_yaw = 180 - qRadiansToDegrees(atan(delta_z / abs(delta_x)));
+        this->desired_yaw = 180 - qRadiansToDegrees(qAtan(delta_z / qFabs(delta_x)));
     }
 
     if (dir == -1) {
@@ -119,7 +119,7 @@ void SU_ROV::calc_desired_yaw(){
 }
 
 void SU_ROV::check_distance(){
-    double dst = sqrt( pow(Z_current - Z1, 2) + pow(X_current - X1, 2) );
+    double dst = qSqrt( qPow(Z_current - Z1, 2) + qPow(X_current - X1, 2) );
 
     if (dst < modelParams.Rmin){
         this->dot_number++;
@@ -159,8 +159,8 @@ void SU_ROV::calc_position(){
 
     double L = real_V_fwd * timer_period / 1000 ; // ms
 
-    double shortTravel_Z = L * sin(qDegreesToRadians(real_yaw));
-    double shortTravel_X = L * cos(qDegreesToRadians(real_yaw));
+    double shortTravel_Z = L * qSin(qDegreesToRadians(real_yaw));
+    double shortTravel_X = L * qCos(qDegreesToRadians(real_yaw));
 
     this->Z_current += shortTravel_Z;
     this->X_current += shortTravel_X;
