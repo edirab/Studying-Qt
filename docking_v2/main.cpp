@@ -9,7 +9,8 @@
 
 int main(int argc, char *argv[])
 {
-
+    int x = -0.1;
+    std::abs(x);
     //double res = qRadiansToDegrees(qAtan(1 / qFabs(0)));
 
     QApplication a(argc, argv);
